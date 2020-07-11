@@ -15,6 +15,7 @@
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Weapons/Gun.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Player/Player.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Shaders/BlendedDecal.shader" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Managers/UIManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Enemies/Zombie.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Weapons/WeaponSway.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Enemies/Enemy.cs" root0="FORCE_HIGHLIGHTING" />
@@ -43,15 +44,16 @@
         <option value="$PROJECT_DIR$/Assets/Scripts/Player.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Weapon.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Enemies/Enemy.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Weapons/WeaponSway.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Managers/AudioManager.cs" />
         <option value="$PROJECT_DIR$/Assets/Shaders/BlendedDecal.shader" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Managers/ParticleManager.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Enemies/Zombie.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Weapons/Gun.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Player/CameraSway.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Player/Player.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Weapons/Gun.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Managers/UIManager.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Managers/AudioManager.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Weapons/WeaponSway.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Weapons/Weapon.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Player/CameraSway.cs" />
       </list>
     </option>
   </component>
@@ -118,6 +120,8 @@
       <workItem from="1594420022393" duration="5459000" />
       <workItem from="1594428485504" duration="2465000" />
       <workItem from="1594479721663" duration="4714000" />
+      <workItem from="1594485540377" duration="1156000" />
+      <workItem from="1594486743096" duration="4509000" />
     </task>
     <servers />
   </component>

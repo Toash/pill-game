@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
+using UnityEngine.UI;
 
 public class Weapon : MonoBehaviour
 {
@@ -19,13 +20,21 @@ public class Weapon : MonoBehaviour
 
     [SerializeField] protected GameObject _bulletHole;
 
+    [SerializeField] protected int _magAmount = 30;
+
+    [SerializeField] protected int _reserveAmmo = 200;
+    
+    
+
     //[SerializeField] protected GameObject _bullet;
 
-    
-    
+
+    protected int _currentAmount;
     protected float _nextFire;
     protected float _defaultFOV;
     protected bool _aiming;
+    private bool _isReloading;
+    
     
     
     
@@ -72,11 +81,21 @@ public class Weapon : MonoBehaviour
         _cam = GameManager.instance.cam;
         _defaultFOV = _cam.fieldOfView;
         initialPosition = transform.localPosition;
+        //sets current amount to the mag amount
+        _currentAmount = _magAmount;
+        UIManager.instance.UpdateUI(UIManager.instance._ammoText, "AMMO: " + _currentAmount.ToString());
+    }
+
+    private void OnEnable()
+    {
+        UIManager.instance.UpdateUI(UIManager.instance._ammoText, "AMMO: " + _currentAmount.ToString());
     }
 
     protected virtual void Fire()
     {
         StartCoroutine(MuzzleFlash());
+        _currentAmount--;
+        UIManager.instance.UpdateUI(UIManager.instance._ammoText, "AMMO: " + _currentAmount.ToString());
         if (_aiming)
         {
             KickbackRecoil();
@@ -117,6 +136,23 @@ public class Weapon : MonoBehaviour
         }
     }
     
+    
+    IEnumerator Reload()
+    {
+        AudioManager.PlaySound(AudioManager.instance.ReloadSFX, .25f);
+        _isReloading = true;
+        
+        transform.localPosition = Vector3.Lerp(initialPosition,
+            initialPosition + new Vector3(0, -10f, 0), Time.deltaTime * 5);
+               
+
+
+        yield return new WaitForSeconds(.6f);
+        _isReloading = false;
+        _currentAmount = _magAmount;
+        UIManager.instance.UpdateUI(UIManager.instance._ammoText, "AMMO: " + _currentAmount.ToString());
+    }
+    
     protected void Update()
     {
         if (!PauseMenu.isPaused)
@@ -131,6 +167,11 @@ public class Weapon : MonoBehaviour
             if (Input.GetMouseButton(0) && !_semi && Time.time > _nextFire)
             {
                 Fire();
+            }
+
+            if (Input.GetButtonDown("Reload") && !_isReloading && _currentAmount != _magAmount)
+            {
+                StartCoroutine(Reload());
             }
         }
     }

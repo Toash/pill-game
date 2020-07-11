@@ -25,6 +25,9 @@ public class AudioManager : MonoBehaviour
     public AudioClip EnemyDeathSFX;
     public AudioClip SplatSFX;
 
+    public AudioClip ReloadSFX;
+    
+
     
     public static void PlaySound(AudioClip sound, float _volume)
     {
