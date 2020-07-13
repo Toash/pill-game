@@ -3,8 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using Random = UnityEngine.Random;
 
 [RequireComponent(typeof(NavMeshAgent))]
+[RequireComponent(typeof(Animator))]
 public abstract class Enemy : MonoBehaviour
 {
         protected GameObject _player;
@@ -24,7 +26,7 @@ public abstract class Enemy : MonoBehaviour
 
 
         //function that determines how the enemy reaches the player.
-        protected virtual void GoToPlayer()
+        public virtual void GoToPlayer()
         {
                 
         }
@@ -38,7 +40,7 @@ public abstract class Enemy : MonoBehaviour
         {
                 if (_player != null && _agent != null)
                 {
-                        GoToPlayer();
+                        //GoToPlayer();
                 }
 
 
@@ -52,6 +54,21 @@ public abstract class Enemy : MonoBehaviour
         public void TakeDamage(float damageAmount)
         {
                 _health -= damageAmount;
+        }
+
+        public void DelayedSetDestination()
+        {
+                StartCoroutine(DelayedSetDestinationCoroutine());
+        }
+        public IEnumerator DelayedSetDestinationCoroutine()
+        {
+                while (true)
+                {
+                        Vector3 movePos = GameManager.instance.GenerateRandomMoveVector(transform.position);
+                        yield return new WaitForSeconds(Random.Range(3, 7));
+
+                        _agent.SetDestination(movePos);
+                }
         }
         
 }

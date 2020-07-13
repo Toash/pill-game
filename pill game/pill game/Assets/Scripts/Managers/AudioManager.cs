@@ -21,7 +21,10 @@ public class AudioManager : MonoBehaviour
     }
 
     public AudioMixer Mixer;
+    public AudioClip GunTickSFX;
     public AudioClip GunShotSFX;
+    public AudioClip SilencedGunShotSFX;
+    public AudioClip PickupSFX;
     public AudioClip EnemyDeathSFX;
     public AudioClip SplatSFX;
 

@@ -16,7 +16,7 @@ public class Zombie : Enemy
     
 
 
-    protected override void GoToPlayer()
+    public override void GoToPlayer()
     {
         
             _agent.SetDestination(_player.transform.position);

@@ -23,6 +23,7 @@ public class UIManager : MonoBehaviour
     
     public Text _healthText;
     public Text _ammoText;
+    public Text _reserveText;
 
 
     // Start is called before the first frame update

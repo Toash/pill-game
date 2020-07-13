@@ -4,16 +4,26 @@ using UnityEngine;
 
 public class Gun : Weapon
 {
+
+    [SerializeField] private bool _silenced;
     protected override void Fire()
     {
-        if (_currentAmount > 0)
+        _nextFire = Time.time + _fireRate;
+        if (_currentAmount > 0 && !WeaponHolder._isSwitching)
         {
             base.Fire();
-            _nextFire = Time.time + _fireRate;
             ModelRecoil();
             if (_cam != null && !PauseMenu.isPaused)
             {
-                AudioManager.PlaySound(AudioManager.instance.GunShotSFX, .1f);
+                if (!_silenced)
+                {
+                    AudioManager.PlaySound(AudioManager.instance.GunShotSFX, .1f);
+                }
+
+                if (_silenced)
+                {
+                    AudioManager.PlaySound(AudioManager.instance.SilencedGunShotSFX, .1f);
+                }
 
                 /*GameObject bullet = Instantiate(_bullet, _cam.transform.position, Quaternion.Euler(_cam.transform.forward));
     
@@ -27,9 +37,8 @@ public class Gun : Weapon
                 {
                     if (hit.transform.CompareTag("Enemy"))
                     {
-                        Debug.Log("hit enemy");
                         ParticleManager.PlayParticleAtPosition(ParticleManager.instance.HitFX, hit.point,
-                            Quaternion.identity);
+                            Quaternion.LookRotation(hit.normal * -1f));
                         hit.transform.GetComponent<Enemy>().TakeDamage(_damage);
                     }
 
@@ -37,7 +46,8 @@ public class Gun : Weapon
                     {
                         if (!hit.transform.CompareTag("DynamicObject"))
                         {
-                            Instantiate(_bulletHole, hit.point, Quaternion.LookRotation(hit.normal * -1f));
+                            var bullethole = Instantiate(_bulletHole, hit.point, Quaternion.LookRotation(hit.normal * -1f));
+                            Destroy(bullethole.gameObject, 3);
                         }
 
                         ParticleManager.PlayParticleAtPosition(ParticleManager.instance.BulletHitFX, hit.point,
@@ -51,5 +61,10 @@ public class Gun : Weapon
                 }
             }
         }
+        else
+        {
+            AudioManager.PlaySound(AudioManager.instance.GunTickSFX, .1f);
+        }
     }
+    
 }
