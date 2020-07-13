@@ -23,6 +23,7 @@ public class ParticleManager : MonoBehaviour
     public ParticleSystem BloodMistFX;
     public ParticleSystem HitFX;
     public ParticleSystem BulletHitFX;
+    public ParticleSystem BulletTracer;
 
     public static void PlayParticleAtPosition(ParticleSystem particle, Vector3 position, Quaternion rotation)
     {

@@ -45,6 +45,7 @@
         <e p="Shaders" t="Include">
           <e p="BlendedDecal.shader" t="Include" />
         </e>
+        <e p="ShootingBehavior.cs" t="Include" />
       </e>
       <e p="obj" t="ExcludeRecursive" />
       <e p="Packages" t="ExcludeRecursive" />

@@ -35,6 +35,8 @@ public class Gun : Weapon
                 RaycastHit hit;
                 if (Physics.Raycast(_cam.transform.position, _cam.transform.forward, out hit))
                 {
+                    ParticleManager.PlayParticleAtPosition(ParticleManager.instance.BulletTracer, _muzzlePosition.transform.position, 
+                        Quaternion.LookRotation(hit.point - _muzzlePosition.transform.position).normalized);
                     if (hit.transform.CompareTag("Enemy"))
                     {
                         ParticleManager.PlayParticleAtPosition(ParticleManager.instance.HitFX, hit.point,

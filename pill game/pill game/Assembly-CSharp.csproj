@@ -78,6 +78,7 @@
      <Compile Include="Assets\Scripts\Weapons\Weapon.cs" />
      <Compile Include="Assets\Scripts\Weapons\WeaponHolder.cs" />
      <Compile Include="Assets\Scripts\Weapons\WeaponSway.cs" />
+     <Compile Include="Assets\ShootingBehavior.cs" />
      <None Include="Assets\Shaders\BlendedDecal.shader" />
  <Reference Include="Unity.Timeline.Editor">
  <HintPath>C:/Users/iitoa/Desktop/Unity Games/pill game/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>

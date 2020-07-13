@@ -7,7 +7,7 @@ using UnityEngine.AI;
 public class Zombie : Enemy
 {
     [SerializeField] protected float _zombieHealth = 100f;
-
+    [SerializeField] private GameObject _bullet;
 
     void Awake()
     {
@@ -23,6 +23,22 @@ public class Zombie : Enemy
         
     }
 
+    public override void Attack()
+    {
+        StartCoroutine(Shooting());
+    }
+
+    private IEnumerator Shooting()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(1);
+            var bullet = Instantiate(_bullet, transform.position + Vector3.up, Quaternion.identity);
+            var bulletRigidybody = bullet.GetComponent<Rigidbody>();
+            bulletRigidybody.AddForce(((_player.transform.position+Vector3.down)- transform.position).normalized * 25,ForceMode.Impulse);
+        }
+    }
+
     protected override void Die()
     {
         AudioManager.PlaySoundAtPosition(AudioManager.instance.EnemyDeathSFX,1,this.transform, AudioManager.instance.Mixer.FindMatchingGroups("Enemy")[0]);
@@ -31,6 +47,9 @@ public class Zombie : Enemy
         ParticleManager.PlayParticleAtPosition(ParticleManager.instance.BloodMistFX,this.transform.position,Quaternion.identity);
         Destroy(this.gameObject);
     }
+    
+    
+    
 
     private void OnTriggerEnter(Collider other)
     {

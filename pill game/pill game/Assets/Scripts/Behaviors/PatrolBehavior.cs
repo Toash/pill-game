@@ -6,15 +6,18 @@ using UnityEngine.AI;
 public class PatrolBehavior : StateMachineBehaviour
 {
 
-    [SerializeField] private float _fieldOfView = 140;
+    [SerializeField] private float _fieldOfView = 165;
+    [SerializeField] private float _viewDistance = 25f;
     
-    private Transform _playerPos;
+    private GameObject _playerPos;
     private NavMeshAgent _agent;
+
+    private bool _alerted;
     
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        _playerPos = GameObject.FindGameObjectWithTag("Player").transform;
+        _playerPos = GameObject.FindGameObjectWithTag("Player");
         _agent = animator.GetComponent<NavMeshAgent>();
         
         animator.GetComponent<Enemy>().DelayedSetDestination();
@@ -24,12 +27,22 @@ public class PatrolBehavior : StateMachineBehaviour
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        var _toPlayer = (animator.transform.position - _playerPos.position);
+        var _toPlayer = (animator.transform.position - _playerPos.transform.position);
         float angleToPlayer = (Vector3.Angle(_toPlayer, -animator.transform.forward));
 
-        if (angleToPlayer >= -(_fieldOfView/2) && angleToPlayer <= (_fieldOfView/2))
+        if (angleToPlayer >= -(_fieldOfView/2) && angleToPlayer <= (_fieldOfView/2) && !_alerted)
         {
-            animator.SetBool("isFollowing", true);
+            RaycastHit hit;
+            if(Physics.Raycast(animator.transform.position, _playerPos.transform.position - animator.transform.position,out hit,_viewDistance))
+            {
+                if (hit.transform.CompareTag("Player"))
+                {
+                    _alerted = true;
+                    AudioManager.PlaySound(AudioManager.instance.AlertedSFX, .05f);
+                    animator.SetBool("isFollowing", true);
+                    animator.SetBool("isPatrolling",false);
+                }
+            }
         }
 
 

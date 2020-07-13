@@ -23,9 +23,12 @@ public class FollowBehavior : StateMachineBehaviour
             //_enemySpeed * Time.deltaTime);
             
             _enemy.GoToPlayer();
-            if (Vector3.Distance(animator.transform.position, _playerPos.position) < 3)
+            if (Vector3.Distance(animator.transform.position, _playerPos.position) < 12)
             {
-                Debug.Log("zombie is close");
+                Debug.Log("shooting behavior");
+                animator.GetComponent<NavMeshAgent>().velocity = Vector3.zero;
+                animator.SetBool("isShooting",true);
+                animator.SetBool("isFollowing",false);
             }
 
     }

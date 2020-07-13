@@ -15,6 +15,7 @@
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Managers/AudioManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Behaviors/PatrolBehavior.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Behaviors/IdleBehavior.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/ShootingBehavior.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Behaviors/FollowBehavior.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Enemies/Zombie.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Enemies/Enemy.cs" root0="FORCE_HIGHLIGHTING" />
@@ -51,25 +52,26 @@
         <option value="$PROJECT_DIR$/Assets/Scripts/Player.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Weapon.cs" />
         <option value="$PROJECT_DIR$/Assets/Shaders/BlendedDecal.shader" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Managers/ParticleManager.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Weapons/WeaponSway.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Managers/GameManager.cs" />
         <option value="$PROJECT_DIR$/Assets/PatrolBehavior.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Enemies/Zombie.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Managers/UIManager.cs" />
         <option value="$PROJECT_DIR$/Assets/IdleBehavior.cs" />
         <option value="$PROJECT_DIR$/Assets/FollowBehavior.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Weapons/WeaponHolder.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Player/CameraSway.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Weapons/Gun.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Pickups/AmmoPickup.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Weapons/Weapon.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Managers/AudioManager.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Player/Player.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Menu/LevelSelect.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Managers/ParticleManager.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Weapons/Weapon.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Weapons/Gun.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Managers/AudioManager.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Behaviors/PatrolBehavior.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Behaviors/FollowBehavior.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Enemies/Enemy.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Menu/LevelSelect.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Behaviors/PatrolBehavior.cs" />
+        <option value="$PROJECT_DIR$/Assets/ShootingBehavior.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Enemies/Zombie.cs" />
       </list>
     </option>
   </component>
@@ -143,6 +145,7 @@
       <workItem from="1594590042371" duration="119000" />
       <workItem from="1594590167104" duration="15000" />
       <workItem from="1594590185158" duration="8737000" />
+      <workItem from="1594604778486" duration="8933000" />
     </task>
     <servers />
   </component>

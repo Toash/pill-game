@@ -13,13 +13,11 @@ public abstract class Enemy : MonoBehaviour
         protected NavMeshAgent _agent;
         protected float _health;
 
-        private void Awake()
-        {
-        }
+
 
         private void Start()
         {
-                _player = GameManager.instance.player;
+                _player = GameObject.FindGameObjectWithTag("Player");
                 _agent = GetComponent<NavMeshAgent>();
         }
         
@@ -34,6 +32,11 @@ public abstract class Enemy : MonoBehaviour
         protected virtual void Die()
         {
 
+        }
+
+        public virtual void Attack()
+        {
+                
         }
 
         protected void Update()

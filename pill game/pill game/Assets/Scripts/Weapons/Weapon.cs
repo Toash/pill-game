@@ -23,6 +23,8 @@ public class Weapon : MonoBehaviour
     [SerializeField] protected int _magAmount = 30;
 
     [SerializeField] protected int _reserveAmmo = 200;
+
+    [SerializeField] protected Transform _muzzlePosition;
     
     
 
