@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Enemy
   - SpawnPoint
+  - DynamicObject
+  - WeaponHolder
+  - Pickup
   layers:
   - Default
   - TransparentFX
@@ -15,6 +18,8 @@ TagManager:
   - UI
   - 
   - 
+  - Weapon
+  - Bullet
   - 
   - 
   - 
@@ -36,9 +41,7 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
-  - 
+  - PostFX
   m_SortingLayers:
   - name: Default
     uniqueID: 0

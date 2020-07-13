@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviour
 {
@@ -42,4 +43,12 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
+
+    public Vector3 GenerateRandomMoveVector(Vector3 startingPos)
+    {
+        Vector3 randomPos = startingPos + new Vector3(Random.Range(-5, 5), 0, Random.Range(-5, 5));
+
+        return randomPos;
+    }
+    
 }

@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Numerics;
+using TMPro;
+using UnityEditorInternal;
 using UnityEngine;
 using Quaternion = UnityEngine.Quaternion;
 using Vector3 = UnityEngine.Vector3;
@@ -12,6 +15,8 @@ public class Player : MonoBehaviour
         [SerializeField] private float _moveSpeed = 12.5f;
 
         [SerializeField] private float _crouchSpeed = 5f;
+
+        [SerializeField] private float _aimSpeed = 4f;
         
         [SerializeField] private float _mouseSensitivity = .65f;
         
@@ -28,6 +33,9 @@ public class Player : MonoBehaviour
         public static float xRotation = 0f;
         private Vector3 _velocity;
         private float _defaultMoveSpeed;
+        
+        public static bool _isAiming;
+        public static bool _isCrouching;
         
         
 
@@ -59,9 +67,19 @@ public class Player : MonoBehaviour
                         Crouch();
                         Gravity();
                         GroundStickiness();
-                        if (Input.GetButtonDown("Jump") && IsGrounded())
+                        if (Input.GetButton("Jump") && IsGrounded())
                         {
                                 Jump();
+                        }
+
+                        if (Input.GetMouseButton(1))
+                        {
+
+                                _isAiming = true;
+                        }
+                        else
+                        {
+                                _isAiming = false;
                         }
                         
                 }
@@ -74,6 +92,20 @@ public class Player : MonoBehaviour
 
                 Vector3 _moveVector = Vector3.ClampMagnitude(transform.right * _horizontal + transform.forward * _vertical,1);
 
+
+                if (_isAiming)
+                {
+                        _moveSpeed = _aimSpeed;
+                }
+
+                else if (_isCrouching)
+                {
+                        _moveSpeed = _crouchSpeed;
+                }
+                else
+                {
+                        _moveSpeed = _defaultMoveSpeed;
+                }
                 _char.Move(_moveVector * _moveSpeed * Time.deltaTime);
                 
         }
@@ -112,12 +144,13 @@ public class Player : MonoBehaviour
         {
                 if (Input.GetButton("Crouch"))
                 {
-                        transform.localScale = new Vector3(1,.5f,1);
-                        
+                        _char.height = .5f;
+                        _isCrouching = true;
                 }
                 else
                 {
-                        transform.localScale = new Vector3(1,1,1);
+                        _char.height = 2f;
+                        _isCrouching = false;
                 }
         }
 
@@ -130,5 +163,14 @@ public class Player : MonoBehaviour
         {
                 GameManager.instance.ReloadScene();
         }
-        
+
+        private void OnTriggerEnter(Collider other)
+        {
+                if (other.CompareTag("Pickup"))
+                {
+                        other.GetComponent<AmmoPickup>().AddPickup(10);
+                        AudioManager.PlaySoundAtPosition(AudioManager.instance.PickupSFX,.25f,other.transform, AudioManager.instance.Mixer.FindMatchingGroups("Effects")[0]);
+                        Destroy(other.gameObject);
+                }
+        }
 }

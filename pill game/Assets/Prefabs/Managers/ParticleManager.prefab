@@ -47,3 +47,6 @@ MonoBehaviour:
     type: 3}
   BloodMistFX: {fileID: 5206436901552374118, guid: 48f81f294e5dce542b07f3efaae1f3ac,
     type: 3}
+  HitFX: {fileID: 8947818416262175617, guid: 67909aa7dfe884245b74572e1902b933, type: 3}
+  BulletHitFX: {fileID: 5355564940899208609, guid: a89cf136d55fc5045b0ec600ee24659a,
+    type: 3}

@@ -21,10 +21,13 @@ public class ParticleManager : MonoBehaviour
 
     public ParticleSystem EnemyDeathFX;
     public ParticleSystem BloodMistFX;
+    public ParticleSystem HitFX;
+    public ParticleSystem BulletHitFX;
+    public ParticleSystem BulletTracer;
 
-    public static void PlayParticleAtPosition(ParticleSystem particle, Transform position)
+    public static void PlayParticleAtPosition(ParticleSystem particle, Vector3 position, Quaternion rotation)
     {
-        var particleFX = Instantiate(particle, position.transform.position, Quaternion.identity);
+        var particleFX = Instantiate(particle, position, rotation);
         Destroy(particleFX.gameObject, particle.main.startLifetimeMultiplier);
 
     }

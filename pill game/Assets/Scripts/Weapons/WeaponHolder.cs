@@ -6,6 +6,8 @@ using UnityEngine;
 public class WeaponHolder : MonoBehaviour
 {
     public int selectedWeapon = 0;
+
+    public static bool _isSwitching;
     
     // Start is called before the first frame update
     void Start()
@@ -16,18 +18,27 @@ public class WeaponHolder : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        if (Input.GetKeyDown(KeyCode.Alpha1) && !Weapon._isReloading && !_isSwitching)
         {
-            selectedWeapon = 0;
-            SelectWeapon();
+            StartCoroutine(SwitchWeapon(0));
         }
-        if (Input.GetKeyDown(KeyCode.Alpha2))
+        if (Input.GetKeyDown(KeyCode.Alpha2) && !Weapon._isReloading && !_isSwitching)
         {
-            selectedWeapon = 1;
-            SelectWeapon();
+            StartCoroutine(SwitchWeapon(1));
         }
     }
 
+    
+
+    IEnumerator SwitchWeapon(int weaponID)
+    {
+        _isSwitching = true;
+        yield return new WaitForSeconds(.1f);
+        selectedWeapon = weaponID;
+        SelectWeapon();
+        _isSwitching = false;
+    }
+    
     void SelectWeapon()
     {
         int i = 0;

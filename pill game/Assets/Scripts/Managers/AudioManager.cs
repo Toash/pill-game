@@ -21,11 +21,19 @@ public class AudioManager : MonoBehaviour
     }
 
     public AudioMixer Mixer;
+    public AudioClip GunTickSFX;
     public AudioClip GunShotSFX;
+    public AudioClip SilencedGunShotSFX;
+    public AudioClip PickupSFX;
     public AudioClip EnemyDeathSFX;
     public AudioClip SplatSFX;
 
+    public AudioClip ReloadSFX;
+    public AudioClip AlertedSFX;
     
+    
+
+    //plays 2d sound
     public static void PlaySound(AudioClip sound, float _volume)
     {
         GameObject soundObject = new GameObject("Sound");
@@ -45,5 +53,5 @@ public class AudioManager : MonoBehaviour
         audioSource.PlayOneShot(sound);
         Destroy(audioSource.gameObject,sound.length);
     }
-    
+
 }

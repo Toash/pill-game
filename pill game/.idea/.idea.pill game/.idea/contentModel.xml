@@ -7,6 +7,11 @@
       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
       <e p="Assets" t="Include">
         <e p="Scripts" t="Include">
+          <e p="Behaviors" t="Include">
+            <e p="FollowBehavior.cs" t="Include" />
+            <e p="IdleBehavior.cs" t="Include" />
+            <e p="PatrolBehavior.cs" t="Include" />
+          </e>
           <e p="Enemies" t="Include">
             <e p="Enemy.cs" t="Include" />
             <e p="Zombie.cs" t="Include" />
@@ -16,20 +21,31 @@
             <e p="GameManager.cs" t="Include" />
             <e p="ParticleManager.cs" t="Include" />
             <e p="SpawnManager.cs" t="Include" />
+            <e p="UIManager.cs" t="Include" />
           </e>
           <e p="Menu" t="Include">
+            <e p="LevelSelect.cs" t="Include" />
             <e p="MainMenu.cs" t="Include" />
             <e p="PauseMenu.cs" t="Include" />
           </e>
+          <e p="Pickups" t="Include">
+            <e p="AmmoPickup.cs" t="Include" />
+          </e>
           <e p="Player" t="Include">
+            <e p="CameraSway.cs" t="Include" />
             <e p="Player.cs" t="Include" />
           </e>
           <e p="Weapons" t="Include">
             <e p="Gun.cs" t="Include" />
             <e p="Weapon.cs" t="Include" />
             <e p="WeaponHolder.cs" t="Include" />
+            <e p="WeaponSway.cs" t="Include" />
           </e>
         </e>
+        <e p="Shaders" t="Include">
+          <e p="BlendedDecal.shader" t="Include" />
+        </e>
+        <e p="ShootingBehavior.cs" t="Include" />
       </e>
       <e p="obj" t="ExcludeRecursive" />
       <e p="Packages" t="ExcludeRecursive" />
