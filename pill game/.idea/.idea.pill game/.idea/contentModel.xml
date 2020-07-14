@@ -6,13 +6,29 @@
     <e p="C:\Users\iitoa\Desktop\Unity Games\pill game" t="IncludeRecursive">
       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
       <e p="Assets" t="Include">
+        <e p="Asset Store Stuff" t="Include">
+          <e p="Aligned Games" t="Include">
+            <e p="Polygonal Modern Weapons Asset Package" t="Include">
+              <e p="Scripts" t="Include">
+                <e p="Utility" t="Include">
+                  <e p="FlyCameraBehaviour.cs" t="Include" />
+                </e>
+              </e>
+              <e p="Shaders" t="Include">
+                <e p="Diffuse.shader" t="Include" />
+              </e>
+            </e>
+          </e>
+        </e>
         <e p="Scripts" t="Include">
           <e p="Behaviors" t="Include">
             <e p="FollowBehavior.cs" t="Include" />
             <e p="IdleBehavior.cs" t="Include" />
             <e p="PatrolBehavior.cs" t="Include" />
+            <e p="ShootingBehavior.cs" t="Include" />
           </e>
           <e p="Enemies" t="Include">
+            <e p="Bullet.cs" t="Include" />
             <e p="Enemy.cs" t="Include" />
             <e p="Zombie.cs" t="Include" />
           </e>
@@ -37,6 +53,7 @@
           </e>
           <e p="Weapons" t="Include">
             <e p="Gun.cs" t="Include" />
+            <e p="Melee.cs" t="Include" />
             <e p="Weapon.cs" t="Include" />
             <e p="WeaponHolder.cs" t="Include" />
             <e p="WeaponSway.cs" t="Include" />
@@ -45,7 +62,6 @@
         <e p="Shaders" t="Include">
           <e p="BlendedDecal.shader" t="Include" />
         </e>
-        <e p="ShootingBehavior.cs" t="Include" />
       </e>
       <e p="obj" t="ExcludeRecursive" />
       <e p="Packages" t="ExcludeRecursive" />

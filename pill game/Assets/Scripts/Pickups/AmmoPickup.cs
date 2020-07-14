@@ -9,36 +9,50 @@ public class AmmoPickup : MonoBehaviour
 
     private GameObject _weaponHolder;
     [SerializeField] private int _weaponID;
+
+
+    private bool doLoop;
+    private Light _light;
     
     // Start is called before the first frame update
 
     private void Awake()
     {
         _weaponHolder = GameObject.FindGameObjectWithTag("WeaponHolder");
+        _light = GetComponent<Light>();
     }
 
     void Start()
     {
-
+        doLoop = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-        int i = 0;
-        foreach (Transform bulletMesh in transform)
+        while (doLoop)
         {
-            if (i == _weaponID)
+            int i = 0;
+            foreach (Transform bulletMesh in transform)
             {
-                bulletMesh.gameObject.SetActive(true);
-            }
-            else
-            {
-                bulletMesh.gameObject.SetActive(false);
-            }
+                if (i == _weaponID)
+                {
+                    bulletMesh.gameObject.SetActive(true);
+                    doLoop = false;
+                }
+                else
+                {
+                    bulletMesh.gameObject.SetActive(false);
+                }
 
-            i++;
+                i++;
+            }
         }
+
+        _light.intensity = Mathf.PingPong(Time.time * 10, 4);
+        _light.range = Mathf.PingPong(Time.time * 5, 2);
+
+
     }
 
     
@@ -50,7 +64,7 @@ public class AmmoPickup : MonoBehaviour
 
             if (i == _weaponID)
             {
-                weapon.GetComponent<Weapon>().AddAmmo(amount);
+                weapon.GetComponent<Gun>().AddAmmo(amount);
             }
             i++;
         }

@@ -13,12 +13,18 @@ public abstract class Enemy : MonoBehaviour
         protected NavMeshAgent _agent;
         protected float _health;
 
+        protected Animator _anim;
+
+
+        public bool enteredTrigger;
+
 
 
         private void Start()
         {
                 _player = GameObject.FindGameObjectWithTag("Player");
                 _agent = GetComponent<NavMeshAgent>();
+                _anim = GetComponent<Animator>();
         }
         
 
@@ -41,10 +47,10 @@ public abstract class Enemy : MonoBehaviour
 
         protected void Update()
         {
-                if (_player != null && _agent != null)
-                {
+                //if (_player != null && _agent != null)
+                //{
                         //GoToPlayer();
-                }
+                //}
 
 
                 if (_health <= 0)
@@ -61,17 +67,21 @@ public abstract class Enemy : MonoBehaviour
 
         public void DelayedSetDestination()
         {
+                //StopAllCoroutines();
                 StartCoroutine(DelayedSetDestinationCoroutine());
         }
-        public IEnumerator DelayedSetDestinationCoroutine()
+        private IEnumerator DelayedSetDestinationCoroutine()
         {
                 while (true)
                 {
                         Vector3 movePos = GameManager.instance.GenerateRandomMoveVector(transform.position);
                         yield return new WaitForSeconds(Random.Range(3, 7));
-
                         _agent.SetDestination(movePos);
                 }
+                        
         }
         
+        
+
+
 }

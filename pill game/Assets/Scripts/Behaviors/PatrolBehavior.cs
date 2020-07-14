@@ -7,10 +7,11 @@ public class PatrolBehavior : StateMachineBehaviour
 {
 
     [SerializeField] private float _fieldOfView = 165;
-    [SerializeField] private float _viewDistance = 25f;
+    [SerializeField] private float _viewDistance = 100f;
     
     private GameObject _playerPos;
     private NavMeshAgent _agent;
+    private Enemy _enemy;
 
     private bool _alerted;
     
@@ -19,6 +20,7 @@ public class PatrolBehavior : StateMachineBehaviour
     {
         _playerPos = GameObject.FindGameObjectWithTag("Player");
         _agent = animator.GetComponent<NavMeshAgent>();
+        _enemy = animator.GetComponent<Enemy>();
         
         animator.GetComponent<Enemy>().DelayedSetDestination();
 
@@ -30,23 +32,38 @@ public class PatrolBehavior : StateMachineBehaviour
         var _toPlayer = (animator.transform.position - _playerPos.transform.position);
         float angleToPlayer = (Vector3.Angle(_toPlayer, -animator.transform.forward));
 
+        if (_enemy.enteredTrigger && !_alerted)
+        {
+            Alerted(animator);
+        }
+        
         if (angleToPlayer >= -(_fieldOfView/2) && angleToPlayer <= (_fieldOfView/2) && !_alerted)
         {
+            //ebug.Log("testinmg");
             RaycastHit hit;
-            if(Physics.Raycast(animator.transform.position, _playerPos.transform.position - animator.transform.position,out hit,_viewDistance))
+            int notenemyMask =~ LayerMask.GetMask("Enemy");
+            if(Physics.Raycast(animator.transform.position, _playerPos.transform.position - animator.transform.position,out hit,_viewDistance,notenemyMask))
             {
+                //Debug.Log(hit.transform.name);
                 if (hit.transform.CompareTag("Player"))
                 {
-                    _alerted = true;
-                    AudioManager.PlaySound(AudioManager.instance.AlertedSFX, .05f);
-                    animator.SetBool("isFollowing", true);
-                    animator.SetBool("isPatrolling",false);
+                    //Debug.Log("alerted!");
+                    Alerted(animator);
                 }
             }
         }
 
 
     }
+
+    void Alerted(Animator animator)
+    {
+        _alerted = true;
+        AudioManager.PlaySound(AudioManager.instance.AlertedSFX, .05f);
+        animator.SetBool("isFollowing", true);
+        animator.SetBool("isPatrolling",false);
+    }
+    
 
 
 

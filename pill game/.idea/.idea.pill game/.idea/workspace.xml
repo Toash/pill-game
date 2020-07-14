@@ -15,19 +15,21 @@
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Managers/AudioManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Behaviors/PatrolBehavior.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Behaviors/IdleBehavior.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/ShootingBehavior.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Behaviors/ShootingBehavior.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Behaviors/FollowBehavior.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Enemies/Zombie.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Enemies/Enemy.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Weapons/WeaponHolder.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Pickups/AmmoPickup.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Weapons/Weapon.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Enemies/Bullet.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Weapons/Gun.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Player/Player.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Shaders/BlendedDecal.shader" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Managers/UIManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Weapons/WeaponSway.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Managers/ParticleManager.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Weapons/Melee.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -58,20 +60,22 @@
         <option value="$PROJECT_DIR$/Assets/Scripts/Managers/UIManager.cs" />
         <option value="$PROJECT_DIR$/Assets/IdleBehavior.cs" />
         <option value="$PROJECT_DIR$/Assets/FollowBehavior.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Weapons/WeaponHolder.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Player/CameraSway.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Pickups/AmmoPickup.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Player/Player.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Menu/LevelSelect.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Managers/ParticleManager.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Weapons/Weapon.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Weapons/Gun.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Managers/AudioManager.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Behaviors/PatrolBehavior.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Behaviors/FollowBehavior.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Enemies/Enemy.cs" />
         <option value="$PROJECT_DIR$/Assets/ShootingBehavior.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Enemies/Bullet.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Behaviors/FollowBehavior.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Weapons/WeaponHolder.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Weapons/Gun.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Behaviors/PatrolBehavior.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Managers/AudioManager.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Enemies/Zombie.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Weapons/Melee.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Weapons/Weapon.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Player/Player.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Pickups/AmmoPickup.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Enemies/Enemy.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Player/CameraSway.cs" />
       </list>
     </option>
   </component>
@@ -146,6 +150,9 @@
       <workItem from="1594590167104" duration="15000" />
       <workItem from="1594590185158" duration="8737000" />
       <workItem from="1594604778486" duration="8933000" />
+      <workItem from="1594664332059" duration="15020000" />
+      <workItem from="1594688137895" duration="1552000" />
+      <workItem from="1594689739444" duration="6112000" />
     </task>
     <servers />
   </component>

@@ -24,6 +24,8 @@ public class AudioManager : MonoBehaviour
     public AudioClip GunTickSFX;
     public AudioClip GunShotSFX;
     public AudioClip SilencedGunShotSFX;
+    public AudioClip SwordSlashSFX;
+    public AudioClip SwordHitSFX;
     public AudioClip PickupSFX;
     public AudioClip EnemyDeathSFX;
     public AudioClip SplatSFX;
@@ -42,11 +44,11 @@ public class AudioManager : MonoBehaviour
         audioSource.PlayOneShot(sound);
         Destroy(audioSource.gameObject,sound.length);
     }
-    public static void PlaySoundAtPosition(AudioClip sound, float _volume,Transform position, AudioMixerGroup group)
+    public static void PlaySoundAtPosition(AudioClip sound, float _volume,Vector3 position, AudioMixerGroup group)
     {
         GameObject soundObject = new GameObject("Sound");
         AudioSource audioSource = soundObject.AddComponent<AudioSource>();
-        audioSource.transform.position = position.transform.position;
+        audioSource.transform.position = position;
         audioSource.volume = _volume;
         audioSource.spatialBlend = 1;
         audioSource.outputAudioMixerGroup = group;

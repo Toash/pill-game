@@ -29,47 +29,75 @@ public class CameraSway : MonoBehaviour
 
     void Update()
     {
-        if (!Qed && Input.GetKeyDown(KeyCode.Q) && !Physics.Raycast(transform.position, -transform.right, _raycastDistance))
+        int playerMask = ~ LayerMask.GetMask("Player");
+        
+        if (!Qed && Input.GetKeyDown(KeyCode.Q) && !Physics.Raycast(transform.position, -transform.right, _raycastDistance,playerMask))
         {
-            rotationX = 1 * _maxAmount;
-            movementX = -1;
-
+            //rotationX = 1 * _maxAmount;
+            //movementX = -1;
+            //movementX = Mathf.Lerp(movementX, -1, Time.deltaTime * 6);
+            
+            
             Qed = true;
             Eed = false;
 
         }
-        else if (!Eed && Input.GetKeyDown(KeyCode.E) && !Physics.Raycast(transform.position, transform.right, _raycastDistance))
+        else if (!Eed && Input.GetKeyDown(KeyCode.E) && !Physics.Raycast(transform.position, transform.right, _raycastDistance,playerMask))
         {
-            rotationX = 1 * -_maxAmount;
-            movementX = 1;
+            //rotationX = 1 * -_maxAmount;
+            //movementX = 1;
+            //movementX = Mathf.Lerp(movementX, 1, Time.deltaTime * 6);
             
             Eed = true;
             Qed = false;
         }
         else if (Qed && Input.GetKeyDown(KeyCode.Q))
         {
-            rotationX = 0;
-            movementX = 0;
+            //rotationX = 0;
+            //movementX = 0;
+            //movementX = Mathf.Lerp(movementX, 0, Time.deltaTime * 6);
             
             Qed = false;
         }
         else if (Eed && Input.GetKeyDown(KeyCode.E))
         {
-            rotationX = 0;
-            movementX = 0;
+            //rotationX = 0;
+            //movementX = 0;
+            //movementX = Mathf.Lerp(movementX, 0, Time.deltaTime * 6);
             
             Eed = false;
         }
         
-        if (Physics.Raycast(transform.position, -transform.right, _raycastDistance)
-            || Physics.Raycast(transform.position, transform.right, _raycastDistance))
+        if (Physics.Raycast(transform.position, -transform.right, _raycastDistance,playerMask)
+            || Physics.Raycast(transform.position, transform.right, _raycastDistance,playerMask))
         {
-            rotationX = 0;
-            movementX = 0;
+            //rotationX = 0;
+            //movementX = 0;
+            //movementX = Mathf.Lerp(movementX, 0, Time.deltaTime * 6);
             
             Qed = false;
             Eed = false;
         }
+
+        if (Qed)
+        {
+            movementX = Mathf.Lerp(movementX, -1, Time.deltaTime * _smooth);
+            rotationX = Mathf.Lerp(rotationX, 1 * _maxAmount, Time.deltaTime * _smooth);
+        }
+
+        else if (Eed)
+        {
+            movementX = Mathf.Lerp(movementX, 1, Time.deltaTime * _smooth);
+            rotationX = Mathf.Lerp(rotationX, 1 * -_maxAmount, Time.deltaTime * _smooth);
+        }
+        else
+        {
+            movementX = Mathf.Lerp(movementX, 0, Time.deltaTime * _smooth);
+            rotationX = Mathf.Lerp(rotationX, 0, Time.deltaTime * _smooth);
+        }
+        
+        
+        
 
         transform.localPosition = initialPosition + new Vector3(movementX * .5f,0,0);
         

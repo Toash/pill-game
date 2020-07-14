@@ -22,11 +22,11 @@ public class Player : MonoBehaviour
         
         [SerializeField] private float _jumpHeight = 3f;
         
-        [SerializeField] private float _health = 100f;
+        public static float _playerHealth = 100f;
         
         [SerializeField] private float _gravity = -9.81f;
 
-        
+        [SerializeField] private GameObject _sensor;
         
         private CharacterController _char;
         private Camera _cam;
@@ -35,7 +35,9 @@ public class Player : MonoBehaviour
         private float _defaultMoveSpeed;
         
         public static bool _isAiming;
-        public static bool _isCrouching;
+        public static bool _isCrouching = false;
+
+        private SphereCollider sphereCollider;
         
         
 
@@ -56,10 +58,20 @@ public class Player : MonoBehaviour
                 _cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
                 Cursor.lockState = CursorLockMode.Locked;
                 Cursor.visible = false;
+                UIManager.instance.UpdateUI(UIManager.instance._healthText, "HEALTH: " + _playerHealth);
+                
+                sphereCollider = _sensor.GetComponent<SphereCollider>();
         }
 
         private void Update()
         {
+                if (_playerHealth <= 0)
+                {
+                        PlayerDeath();
+                }
+                
+
+
                 if (!PauseMenu.isPaused)
                 {
                         Move();  
@@ -142,15 +154,18 @@ public class Player : MonoBehaviour
 
         private void Crouch()
         {
-                if (Input.GetButton("Crouch"))
+                if (Input.GetButtonDown("Crouch"))
                 {
-                        _char.height = .5f;
-                        _isCrouching = true;
-                }
-                else
-                {
-                        _char.height = 2f;
-                        _isCrouching = false;
+                        if (!_isCrouching)
+                        {
+                                _char.height = .5f;
+                                _isCrouching = true;
+                        }
+                        else
+                        {
+                                _char.height = 2f;
+                                _isCrouching = false;
+                        }
                 }
         }
 
@@ -158,6 +173,12 @@ public class Player : MonoBehaviour
         {
                 _velocity.y += _gravity * Time.deltaTime;
                 _char.Move(_velocity * Time.deltaTime);
+        }
+
+        public void PlayerDamage(int damageAmount)
+        {
+                _playerHealth = _playerHealth - damageAmount;
+                UIManager.instance.UpdateUI(UIManager.instance._healthText, "HEALTH: " + _playerHealth);
         }
         public void PlayerDeath()
         {
@@ -169,8 +190,23 @@ public class Player : MonoBehaviour
                 if (other.CompareTag("Pickup"))
                 {
                         other.GetComponent<AmmoPickup>().AddPickup(10);
-                        AudioManager.PlaySoundAtPosition(AudioManager.instance.PickupSFX,.25f,other.transform, AudioManager.instance.Mixer.FindMatchingGroups("Effects")[0]);
+                        AudioManager.PlaySoundAtPosition(AudioManager.instance.PickupSFX,.25f,other.transform.position, AudioManager.instance.Mixer.FindMatchingGroups("Effects")[0]);
                         Destroy(other.gameObject);
                 }
         }
+
+        public void ActivateSensorTrigger(float radius)
+        {
+                StartCoroutine(ActivateSensorTriggerCoroutine(radius));
+        }
+
+        IEnumerator ActivateSensorTriggerCoroutine(float radius)
+        {
+                sphereCollider.radius = radius;
+                _sensor.SetActive(true);
+                yield return new WaitForSeconds(.05f);
+                _sensor.SetActive(false);
+                sphereCollider.radius = 0;
+        }
+        
 }

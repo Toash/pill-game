@@ -25,10 +25,17 @@ public class FollowBehavior : StateMachineBehaviour
             _enemy.GoToPlayer();
             if (Vector3.Distance(animator.transform.position, _playerPos.position) < 12)
             {
-                Debug.Log("shooting behavior");
-                animator.GetComponent<NavMeshAgent>().velocity = Vector3.zero;
-                animator.SetBool("isShooting",true);
-                animator.SetBool("isFollowing",false);
+                RaycastHit hit;
+                if(Physics.Raycast(animator.transform.position, _playerPos.transform.position - animator.transform.position,out hit))
+                {
+                    if (hit.transform.CompareTag("Player"))
+                    {
+                        //Debug.Log("raycasthittheplayer!");
+                        animator.GetComponent<NavMeshAgent>().velocity = Vector3.zero;
+                        animator.SetBool("isShooting", true);
+                        animator.SetBool("isFollowing", false);
+                    }
+                }
             }
 
     }
