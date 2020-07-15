@@ -16,8 +16,10 @@ public abstract class Enemy : MonoBehaviour
         protected Animator _anim;
 
 
-        public bool enteredTrigger;
+        [HideInInspector] public bool enteredTrigger;
 
+
+        public bool _hitByPlayer;
 
 
         private void Start()
@@ -30,14 +32,20 @@ public abstract class Enemy : MonoBehaviour
 
 
         //function that determines how the enemy reaches the player.
-        public virtual void GoToPlayer()
+        public void GoToPlayer()
         {
-                
+        
+                _agent.SetDestination(_player.transform.position);
+        
         }
 
-        protected virtual void Die()
+        private void Die()
         {
-
+                AudioManager.PlaySoundAtPosition(AudioManager.instance.EnemyDeathSFX,1,this.transform.position, AudioManager.instance.Mixer.FindMatchingGroups("Enemy")[0]);
+                AudioManager.PlaySoundAtPosition(AudioManager.instance.SplatSFX,10,this.transform.position,AudioManager.instance.Mixer.FindMatchingGroups("Enemy")[0]);
+                ParticleManager.PlayParticleAtPosition(ParticleManager.instance.EnemyDeathFX,this.transform.position,Quaternion.identity);
+                ParticleManager.PlayParticleAtPosition(ParticleManager.instance.BloodMistFX,this.transform.position,Quaternion.identity);
+                Destroy(this.gameObject);
         }
 
         public virtual void Attack()
@@ -62,6 +70,7 @@ public abstract class Enemy : MonoBehaviour
 
         public void TakeDamage(float damageAmount)
         {
+                _hitByPlayer = true;
                 _health -= damageAmount;
         }
 

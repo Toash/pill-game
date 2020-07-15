@@ -5,11 +5,13 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
+
+
 public class GameManager : MonoBehaviour
 {
-    private static GameManager _instance = null;
-    private Camera _cam = null;
-    private GameObject _player = null;
+    private static GameManager _instance;
+    private Camera _cam;
+    private GameObject _player;
 
 
     public static GameManager instance => _instance;
@@ -20,6 +22,7 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
+        //DontDestroyOnLoad(this.gameObject);
         if (_instance == null)
         {
             _instance = this;
@@ -29,7 +32,20 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
         _cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
-        _player = GameObject.FindGameObjectWithTag("Player");
+
+        if (_player == null)
+        {
+            _player = GameObject.FindGameObjectWithTag("Player");
+        }
+    }
+
+
+    private void Update()
+    {
+        if (_player == null)
+        {
+            _player = GameObject.FindGameObjectWithTag("Player");
+        }
     }
 
     public void LoadMenuScene()
@@ -42,6 +58,8 @@ public class GameManager : MonoBehaviour
     public void ReloadScene()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        Time.timeScale = 1;
+        PauseMenu.isPaused = false;
     }
 
     public Vector3 GenerateRandomMoveVector(Vector3 startingPos)

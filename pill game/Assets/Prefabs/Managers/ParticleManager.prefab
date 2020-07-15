@@ -50,3 +50,5 @@ MonoBehaviour:
   HitFX: {fileID: 8947818416262175617, guid: 67909aa7dfe884245b74572e1902b933, type: 3}
   BulletHitFX: {fileID: 5355564940899208609, guid: a89cf136d55fc5045b0ec600ee24659a,
     type: 3}
+  BulletTracer: {fileID: 4022675667482568266, guid: 430c39283ea801c4b8889749e23f7ffd,
+    type: 3}

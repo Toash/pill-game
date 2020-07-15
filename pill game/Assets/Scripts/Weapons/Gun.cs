@@ -13,10 +13,15 @@ public class Gun : Weapon
 
     [SerializeField] protected int _reserveAmmo = 200;
 
+    [SerializeField] private float _reloadSpeed = .6f;
+
     [SerializeField] protected Transform _muzzlePosition;
 
     
     [SerializeField] protected GameObject _muzzleLightGameObject;
+
+    [SerializeField] private AudioClip _gunSound;
+    [SerializeField] private float _volume;
     
     
     [SerializeField] private float _rotationSpeed = 6f;
@@ -30,7 +35,12 @@ public class Gun : Weapon
     [SerializeField] protected float _zoomFOV;
 
     [SerializeField] private float _soundRange;
-    
+
+    [SerializeField] private bool _isShotgun;
+
+    [SerializeField] private int _pellets;
+
+    [SerializeField] private float _spread;
     
     private Vector3 currentRotation;
     private Vector3 Rot;
@@ -131,53 +141,124 @@ public class Gun : Weapon
                 KickbackRecoil();
             }
             ModelRecoil();
-            if (!_silenced)
-            {
-                    AudioManager.PlaySound(AudioManager.instance.GunShotSFX, .1f);
-            }
 
-            if (_silenced)
-            {
-                    AudioManager.PlaySound(AudioManager.instance.SilencedGunShotSFX, .1f);
-            }
+            //PLAY THE GUN SOUND
+            AudioManager.PlaySound(_gunSound, _volume);
+            
+
 
             /*GameObject bullet = Instantiate(_bullet, _cam.transform.position, Quaternion.Euler(_cam.transform.forward));
     
             Rigidbody _bulletRB = bullet.GetComponent<Rigidbody>();
             _bulletRB.AddForce(_cam.transform.forward * 100,ForceMode.Impulse);*/
 
-
+            int excludingPlayer =~ LayerMask.GetMask("Player");
             Ray ray;
             RaycastHit hit;
-            if (Physics.Raycast(_cam.transform.position, _cam.transform.forward, out hit))
+            
+            #region NotShotgun
+            
+            if (!_isShotgun)
             {
-                ParticleManager.PlayParticleAtPosition(ParticleManager.instance.BulletTracer, _muzzlePosition.transform.position, 
-                    Quaternion.LookRotation(hit.point - _muzzlePosition.transform.position).normalized);
-                if (hit.transform.CompareTag("Enemy"))
+                if (Physics.Raycast(_cam.transform.position, _cam.transform.forward, out hit, 1000,excludingPlayer))
                 {
-                    ParticleManager.PlayParticleAtPosition(ParticleManager.instance.HitFX, hit.point,
-                        Quaternion.LookRotation(hit.normal * -1f));
-                    hit.transform.GetComponent<Enemy>().TakeDamage(_damage);
-                }
-
-                if (!hit.transform.CompareTag("Enemy"))
-                {
-                    if (!hit.transform.CompareTag("DynamicObject"))
+                    //bullet tracer
+                    ParticleManager.PlayParticleAtPosition(ParticleManager.instance.BulletTracer,
+                        _muzzlePosition.transform.position,
+                        Quaternion.LookRotation(hit.point - _muzzlePosition.transform.position).normalized);
+                    if (hit.transform.CompareTag("Enemy"))
                     {
-                        var bullethole = Instantiate(_bulletHole, hit.point, Quaternion.LookRotation(hit.normal * -1f));
-                        Destroy(bullethole.gameObject, 3);
+                        //if we have hit the enemy
+
+
+                        ParticleManager.PlayParticleAtPosition(ParticleManager.instance.HitFX, hit.point,
+                            Quaternion.LookRotation(hit.normal * -1f));
+                        AudioManager.PlaySoundAtPosition(AudioManager.instance.SplatSFX, 1, hit.point,
+                            AudioManager.instance.Mixer.FindMatchingGroups("Enemy")[0]);
+                        hit.transform.GetComponent<Enemy>().TakeDamage(_damage);
                     }
 
-                    ParticleManager.PlayParticleAtPosition(ParticleManager.instance.BulletHitFX, hit.point,
-                        Quaternion.LookRotation(hit.normal * -1f));
-                }
+                    if (!hit.transform.CompareTag("Enemy"))
+                    {
 
-                if (hit.rigidbody != null)
-                {
-                    hit.rigidbody.AddForce(-hit.normal * 15, ForceMode.Impulse);
+                        if (!hit.transform.CompareTag("DynamicObject"))
+                        {
+                            //if we hit an object that is dynamic
+                            var bullethole = Instantiate(_bulletHole, hit.point,
+                                Quaternion.LookRotation(hit.normal * -1f));
+                            Destroy(bullethole.gameObject, 3);
+                        }
+
+                        //if we didnt hit an enemy, spawn a bullet hole
+                        ParticleManager.PlayParticleAtPosition(ParticleManager.instance.BulletHitFX, hit.point,
+                            Quaternion.LookRotation(hit.normal * -1f));
+                    }
+
+                    //if the thing has a rigidbody, add a force
+                    if (hit.rigidbody != null)
+                    {
+                        hit.rigidbody.AddForce(-hit.normal * 15, ForceMode.Impulse);
+                    }
                 }
             }
-            
+            #endregion
+            #region Shotgun
+            if (_isShotgun)
+            {
+                bool _hasHitEnemy = false;
+                for (int i = 0; i < _pellets; i++)
+                {
+                    if (Physics.Raycast(_cam.transform.position, _cam.transform.forward + GetRandomDirection(!Player._isAiming ? _spread : _spread/5f), out hit,1000,excludingPlayer))
+                    {
+                        
+                        //Debug.Log(hit.transform.name);
+                        //bullet tracer
+                        ParticleManager.PlayParticleAtPosition(ParticleManager.instance.BulletTracer,
+                            _muzzlePosition.transform.position,
+                            Quaternion.LookRotation(hit.point - _muzzlePosition.transform.position).normalized);
+
+                        
+                        
+                        if (hit.transform.CompareTag("Enemy"))
+                        {
+                            _hasHitEnemy = true;
+                            //if we have hit the enemy
+                            ParticleManager.PlayParticleAtPosition(ParticleManager.instance.HitFX, hit.point,
+                                Quaternion.LookRotation(hit.normal * -1f));
+                            hit.transform.GetComponent<Enemy>().TakeDamage(_damage);
+                        }
+
+                        if (!hit.transform.CompareTag("Enemy"))
+                        {
+
+                            if (!hit.transform.CompareTag("DynamicObject"))
+                            {
+                                //if we hit an object that is dynamic
+                                var bullethole = Instantiate(_bulletHole, hit.point,
+                                    Quaternion.LookRotation(hit.normal * -1f));
+                                Destroy(bullethole.gameObject, 3);
+                            }
+
+                            //if we didnt hit an enemy, spawn a bullet hole
+                            ParticleManager.PlayParticleAtPosition(ParticleManager.instance.BulletHitFX, hit.point,
+                                Quaternion.LookRotation(hit.normal * -1f));
+                        }
+
+                        //if the thing has a rigidbody, add a force
+                        if (hit.rigidbody != null)
+                        {
+                            hit.rigidbody.AddForce(-hit.normal * 15, ForceMode.Impulse);
+                        }
+                    }
+                }
+
+                if (_hasHitEnemy)
+                {
+                    AudioManager.PlaySound(AudioManager.instance.SplatSFX, .25f);
+                }
+            }
+            #endregion
+
         }
         else
         {
@@ -194,7 +275,7 @@ public class Gun : Weapon
                
 
 
-        yield return new WaitForSeconds(.6f);
+        yield return new WaitForSeconds(_reloadSpeed);
         _isReloading = false;
 
 

@@ -1,12 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel.Design;
-using System.Numerics;
-using TMPro;
-using UnityEditorInternal;
 using UnityEngine;
-using Quaternion = UnityEngine.Quaternion;
 using Vector3 = UnityEngine.Vector3;
 
 [RequireComponent(typeof(CharacterController))]
@@ -22,7 +17,7 @@ public class Player : MonoBehaviour
         
         [SerializeField] private float _jumpHeight = 3f;
         
-        public static float _playerHealth = 100f;
+        public  float _playerHealth = 100f;
         
         [SerializeField] private float _gravity = -9.81f;
 
@@ -38,8 +33,14 @@ public class Player : MonoBehaviour
         public static bool _isCrouching = false;
 
         private SphereCollider sphereCollider;
-        
-        
+
+        public static float _horizontal;
+        public static float _vertical;
+
+        private bool _sceneReloaded;
+
+
+        private AudioSource _footSteps;
 
         public Camera playerCamera
         {
@@ -48,28 +49,25 @@ public class Player : MonoBehaviour
 
         private void Awake()
         {
-                _defaultMoveSpeed = _moveSpeed;
+                _footSteps = GetComponent<AudioSource>();
         }
 
 
         private void Start()
         {
+                //_playerHealth = _playerHealth;
                 _char = GetComponent<CharacterController>();
                 _cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
                 Cursor.lockState = CursorLockMode.Locked;
                 Cursor.visible = false;
                 UIManager.instance.UpdateUI(UIManager.instance._healthText, "HEALTH: " + _playerHealth);
-                
+                _defaultMoveSpeed = _moveSpeed;
                 sphereCollider = _sensor.GetComponent<SphereCollider>();
         }
 
         private void Update()
         {
-                if (_playerHealth <= 0)
-                {
-                        PlayerDeath();
-                }
-                
+
 
 
                 if (!PauseMenu.isPaused)
@@ -82,6 +80,20 @@ public class Player : MonoBehaviour
                         if (Input.GetButton("Jump") && IsGrounded())
                         {
                                 Jump();
+                        }
+
+                        if (_horizontal > 0 || _vertical > 0 || _horizontal < 0 || _vertical < 0)
+                        {
+                                _footSteps.enabled = true;
+                        }
+                        else
+                        {
+                                _footSteps.enabled = false;
+                        }
+
+                        if (_isAiming || _isCrouching || !IsGrounded())
+                        {
+                                _footSteps.enabled = false;
                         }
 
                         if (Input.GetMouseButton(1))
@@ -99,8 +111,8 @@ public class Player : MonoBehaviour
 
         private void Move()
         {
-                float _horizontal = Input.GetAxisRaw("Horizontal");
-                float _vertical = Input.GetAxisRaw("Vertical");
+                _horizontal = Input.GetAxisRaw("Horizontal");
+                _vertical = Input.GetAxisRaw("Vertical");
 
                 Vector3 _moveVector = Vector3.ClampMagnitude(transform.right * _horizontal + transform.forward * _vertical,1);
 
@@ -179,17 +191,26 @@ public class Player : MonoBehaviour
         {
                 _playerHealth = _playerHealth - damageAmount;
                 UIManager.instance.UpdateUI(UIManager.instance._healthText, "HEALTH: " + _playerHealth);
+                if (_playerHealth <= 0)
+                {
+                        PlayerDeath();
+                        
+                        
+
+                }
         }
         public void PlayerDeath()
         {
-                GameManager.instance.ReloadScene();
+
+                        GameManager.instance.ReloadScene();
+
         }
 
         private void OnTriggerEnter(Collider other)
         {
                 if (other.CompareTag("Pickup"))
                 {
-                        other.GetComponent<AmmoPickup>().AddPickup(10);
+                        other.GetComponent<AmmoPickup>().AddPickup();
                         AudioManager.PlaySoundAtPosition(AudioManager.instance.PickupSFX,.25f,other.transform.position, AudioManager.instance.Mixer.FindMatchingGroups("Effects")[0]);
                         Destroy(other.gameObject);
                 }

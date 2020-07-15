@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    public int _damage;
+    [HideInInspector]public int _damage;
     
     // Start is called before the first frame update
     void Start()
@@ -23,7 +23,7 @@ public class Bullet : MonoBehaviour
     {
         if (other.transform.CompareTag("Player"))
         {
-            Debug.Log("hit the player");
+            //Debug.Log("hit the player");
             var playerRef = other.gameObject.GetComponent<Player>();
             playerRef.PlayerDamage(_damage);
             Destroy(this.gameObject);

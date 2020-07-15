@@ -24,6 +24,7 @@ public class UIManager : MonoBehaviour
     public Text _healthText;
     public Text _ammoText;
     public Text _reserveText;
+    public Text _pickupText;
 
 
     // Start is called before the first frame update
@@ -41,6 +42,19 @@ public class UIManager : MonoBehaviour
     public void UpdateUI(Text textToUpdate, string stringToUpdate)
     {
         textToUpdate.text = stringToUpdate;
+    }
+
+    public void UpdatePickupText(string stringToUpdate)
+    {
+        StopAllCoroutines();
+        StartCoroutine(UpdatePickupTextCoroutine(stringToUpdate));
+    }
+
+    private IEnumerator UpdatePickupTextCoroutine(string stringToUpdate)
+    {
+        _pickupText.text = stringToUpdate;
+        yield return new WaitForSeconds(3);
+        _pickupText.text = "";
     }
     
 }

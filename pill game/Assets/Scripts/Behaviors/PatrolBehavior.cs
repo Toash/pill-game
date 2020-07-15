@@ -7,11 +7,11 @@ public class PatrolBehavior : StateMachineBehaviour
 {
 
     [SerializeField] private float _fieldOfView = 165;
-    [SerializeField] private float _viewDistance = 100f;
-    
+
     private GameObject _playerPos;
     private NavMeshAgent _agent;
     private Enemy _enemy;
+    private Shooter _shooter;
 
     private bool _alerted;
     
@@ -21,6 +21,7 @@ public class PatrolBehavior : StateMachineBehaviour
         _playerPos = GameObject.FindGameObjectWithTag("Player");
         _agent = animator.GetComponent<NavMeshAgent>();
         _enemy = animator.GetComponent<Enemy>();
+        _shooter = animator.GetComponent<Shooter>();
         
         animator.GetComponent<Enemy>().DelayedSetDestination();
 
@@ -36,13 +37,24 @@ public class PatrolBehavior : StateMachineBehaviour
         {
             Alerted(animator);
         }
+
+        if (_shooter._hitByPlayer && !_alerted)
+        {
+            Alerted(animator);
+        }
+        
+        
+        
         
         if (angleToPlayer >= -(_fieldOfView/2) && angleToPlayer <= (_fieldOfView/2) && !_alerted)
         {
             //ebug.Log("testinmg");
             RaycastHit hit;
             int notenemyMask =~ LayerMask.GetMask("Enemy");
-            if(Physics.Raycast(animator.transform.position, _playerPos.transform.position - animator.transform.position,out hit,_viewDistance,notenemyMask))
+            LayerMask notSensorMask =~ LayerMask.GetMask("Sensor");
+
+            LayerMask finalMask = notenemyMask | notSensorMask;
+            if(Physics.Raycast(animator.transform.position, _playerPos.transform.position - animator.transform.position,out hit,_shooter._viewDistance,notenemyMask))
             {
                 //Debug.Log(hit.transform.name);
                 if (hit.transform.CompareTag("Player"))

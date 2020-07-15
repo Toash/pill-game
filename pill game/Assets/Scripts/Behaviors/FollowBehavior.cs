@@ -7,12 +7,14 @@ public class FollowBehavior : StateMachineBehaviour
 {
     private Transform _playerPos;
     private Enemy _enemy;
-    [SerializeField] private float _enemySpeed;
+    private Shooter _zombie;
+    [SerializeField] private float _distanceUntilShooting = 20f;
     
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         _enemy = animator.GetComponent<Enemy>();
+        _zombie = animator.GetComponent<Shooter>();
         _playerPos = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
@@ -23,10 +25,12 @@ public class FollowBehavior : StateMachineBehaviour
             //_enemySpeed * Time.deltaTime);
             
             _enemy.GoToPlayer();
-            if (Vector3.Distance(animator.transform.position, _playerPos.position) < 12)
+            if (Vector3.Distance(animator.transform.position, _playerPos.position) < _zombie._distanceToShoot)
             {
                 RaycastHit hit;
-                if(Physics.Raycast(animator.transform.position, _playerPos.transform.position - animator.transform.position,out hit))
+                LayerMask notsensorMask =~ LayerMask.GetMask("Sensor");
+                
+                if(Physics.Raycast(animator.transform.position + (Vector3.up * 1), _playerPos.transform.position - animator.transform.position,out hit))
                 {
                     if (hit.transform.CompareTag("Player"))
                     {

@@ -65,7 +65,8 @@
      <Compile Include="Assets\Scripts\Behaviors\ShootingBehavior.cs" />
      <Compile Include="Assets\Scripts\Enemies\Bullet.cs" />
      <Compile Include="Assets\Scripts\Enemies\Enemy.cs" />
-     <Compile Include="Assets\Scripts\Enemies\Zombie.cs" />
+     <Compile Include="Assets\Scripts\Enemies\Rusher.cs" />
+     <Compile Include="Assets\Scripts\Enemies\Shooter.cs" />
      <Compile Include="Assets\Scripts\Managers\AudioManager.cs" />
      <Compile Include="Assets\Scripts\Managers\GameManager.cs" />
      <Compile Include="Assets\Scripts\Managers\ParticleManager.cs" />
@@ -83,6 +84,8 @@
      <Compile Include="Assets\Scripts\Weapons\WeaponHolder.cs" />
      <Compile Include="Assets\Scripts\Weapons\WeaponSway.cs" />
      <None Include="Assets\Asset Store Stuff\Aligned Games\Polygonal Modern Weapons Asset Package\Shaders\Diffuse.shader" />
+     <None Include="Assets\BrokenVector\LowPolyShaders\Shaders\LowPolyUnlitShader.shader" />
+     <None Include="Assets\BrokenVector\LowPolyShaders\Shaders\LowPolyPBRShader.shader" />
      <None Include="Assets\Shaders\BlendedDecal.shader" />
  <Reference Include="Unity.Timeline.Editor">
  <HintPath>C:/Users/iitoa/Desktop/Unity Games/pill game/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>

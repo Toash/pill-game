@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -17,6 +18,11 @@ public class ParticleManager : MonoBehaviour
 
             return _instance;
         }
+    }
+
+    private void Awake()
+    {
+        //DontDestroyOnLoad(this.gameObject);
     }
 
     public ParticleSystem EnemyDeathFX;

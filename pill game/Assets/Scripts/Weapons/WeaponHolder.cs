@@ -42,6 +42,10 @@ public class WeaponHolder : MonoBehaviour
         {
             StartCoroutine(SwitchWeapon(2));
         }
+        if (Input.GetKeyDown(KeyCode.Alpha4) && !Weapon._isReloading && !_isSwitching)
+        {
+            StartCoroutine(SwitchWeapon(3));
+        }
     }
 
     

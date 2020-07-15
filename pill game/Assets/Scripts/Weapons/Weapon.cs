@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class Weapon : MonoBehaviour
 {
 
-    protected Camera _cam = null;
+    protected Camera _cam;
     
     
     [SerializeField] protected bool _semi;
@@ -18,6 +18,8 @@ public class Weapon : MonoBehaviour
     [SerializeField] protected float _damage;
 
     [SerializeField] protected GameObject _bulletHole;
+
+    [SerializeField] private Vector3 _modelRecoil;
     
     
     
@@ -41,7 +43,7 @@ public class Weapon : MonoBehaviour
 
     protected void ModelRecoil()
     {
-        transform.localPosition = Vector3.Lerp(transform.localPosition, new Vector3(0,0,-2) + initialPosition,
+        transform.localPosition = Vector3.Lerp(transform.localPosition, -_modelRecoil + initialPosition,
             Time.deltaTime * 30);
     }
     
@@ -56,17 +58,29 @@ public class Weapon : MonoBehaviour
     {
         _cam.transform.localRotation = Quaternion.Euler(new Vector3(Player.xRotation,0,0)+CameraSway.SwayRot);
     }
-    
-    
 
-    protected virtual void Start()
+
+    private void Awake()
     {
-        _cam = GameManager.instance.cam;
+        //_cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+    }
+
+    private void OnEnable()
+    {
+        
+    }
+
+    protected virtual  void Start()
+    {
+        if (!_cam)
+        {
+            _cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+        }
+
         _defaultFOV = _cam.fieldOfView;
         initialPosition = transform.localPosition;
     }
 
-    
 
     protected virtual void Fire()
     {
@@ -101,7 +115,14 @@ public class Weapon : MonoBehaviour
             }
         }
     }
-    
-    
-    
+
+    protected Vector3 GetRandomDirection(float randomness)
+    {
+        Vector3 direction = new Vector3(Random.Range(-randomness,randomness),Random.Range(-randomness,randomness),Random.Range(-randomness,randomness)
+        );
+
+        return direction;
+
+    }
+
 }

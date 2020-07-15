@@ -99,7 +99,7 @@ public class CameraSway : MonoBehaviour
         
         
 
-        transform.localPosition = initialPosition + new Vector3(movementX * .5f,0,0);
+        transform.localPosition = initialPosition + new Vector3(movementX,0,0);
         
         SwayRot = new Vector3(0,0,rotationX);
     }

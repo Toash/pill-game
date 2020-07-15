@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
@@ -32,8 +33,11 @@ public class AudioManager : MonoBehaviour
 
     public AudioClip ReloadSFX;
     public AudioClip AlertedSFX;
-    
-    
+
+    private void Awake()
+    {
+        //DontDestroyOnLoad(this.gameObject);
+    }
 
     //plays 2d sound
     public static void PlaySound(AudioClip sound, float _volume)

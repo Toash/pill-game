@@ -20,6 +20,14 @@
             </e>
           </e>
         </e>
+        <e p="BrokenVector" t="Include">
+          <e p="LowPolyShaders" t="Include">
+            <e p="Shaders" t="Include">
+              <e p="LowPolyPBRShader.shader" t="Include" />
+              <e p="LowPolyUnlitShader.shader" t="Include" />
+            </e>
+          </e>
+        </e>
         <e p="Scripts" t="Include">
           <e p="Behaviors" t="Include">
             <e p="FollowBehavior.cs" t="Include" />
@@ -30,7 +38,8 @@
           <e p="Enemies" t="Include">
             <e p="Bullet.cs" t="Include" />
             <e p="Enemy.cs" t="Include" />
-            <e p="Zombie.cs" t="Include" />
+            <e p="Rusher.cs" t="Include" />
+            <e p="Shooter.cs" t="Include" />
           </e>
           <e p="Managers" t="Include">
             <e p="AudioManager.cs" t="Include" />
