@@ -30,6 +30,7 @@ public class ParticleManager : MonoBehaviour
     public ParticleSystem HitFX;
     public ParticleSystem BulletHitFX;
     public ParticleSystem BulletTracer;
+    public ParticleSystem ExplosionFX;
 
     public static void PlayParticleAtPosition(ParticleSystem particle, Vector3 position, Quaternion rotation)
     {

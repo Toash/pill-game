@@ -21,18 +21,15 @@ public class ShootingBehavior : StateMachineBehaviour
     {
         RaycastHit hit;
         LayerMask notenemyMask =~ LayerMask.GetMask("Enemy");
-        LayerMask notSensorMask =~ LayerMask.GetMask("Sensor");
-
-        LayerMask finalMask = notenemyMask | notSensorMask;
-        Debug.DrawRay(animator.transform.position + Vector3.up * 3, _playerPos.transform.position - (animator.transform.position + Vector3.up * 3), Color.red);
-        if (Physics.Raycast(animator.transform.position + Vector3.up * 3, _playerPos.transform.position - (animator.transform.position + Vector3.up * 3),
-            out hit,1000,notenemyMask))
+        Debug.DrawRay(animator.transform.position + Vector3.up * 2, _playerPos.transform.position - (animator.transform.position + Vector3.up * 2), Color.red);
+        if (Physics.Raycast(animator.transform.position + Vector3.up * 2, _playerPos.transform.position - (animator.transform.position + Vector3.up * 2),
+            out hit,1000,GameManager.instance._enemyLayerMask))
             
         {
-            if (!hit.transform.CompareTag("Player"))
+            if (!hit.transform.CompareTag("Player") && !hit.transform.CompareTag("Shield") && !hit.transform.CompareTag("Bullet") && !hit.transform.CompareTag("Weapon"))
             {
-                //Debug.Log("player hideing");
-                Debug.Log(hit.transform.name);
+                Debug.Log("player hideing");
+                //Debug.Log(hit.transform.name);
                 animator.SetBool("isShooting", false);
                 animator.SetBool("isFollowing", true);
             }
@@ -44,11 +41,13 @@ public class ShootingBehavior : StateMachineBehaviour
         //when distance from enemy to player is greater than value
         if (Vector3.Distance(animator.transform.position, GameManager.instance.player.transform.position ) > _zombie._distanceToShoot)
         {
-            animator.GetComponent<Enemy>().GoToPlayer();
+            animator.GetComponent<NavMeshAgent>().isStopped = false;
+            animator.GetComponent<NavMeshAgent>().SetDestination(_playerPos.position);
         }
         else
         {
-            animator.GetComponent<NavMeshAgent>().velocity = Vector3.zero;
+            Debug.Log("bruhhhhh");
+            animator.GetComponent<NavMeshAgent>().isStopped = true;
             var lookPos = GameManager.instance.player.transform.position - animator.transform.position;
             lookPos.y = 0;
             animator.transform.rotation = Quaternion.Slerp(animator.transform.rotation, Quaternion.LookRotation(lookPos), Time.deltaTime * 500);
@@ -59,6 +58,7 @@ public class ShootingBehavior : StateMachineBehaviour
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         animator.GetComponent<Shooter>().StopCoroutines();
+        animator.GetComponent<NavMeshAgent>().isStopped = false;
     }
 
     // OnStateMove is called right after Animator.OnAnimatorMove()

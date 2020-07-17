@@ -9,9 +9,16 @@ using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviour
 {
+    public float _explosiveBarrelRadius = 10f;
+    
+    
     private static GameManager _instance;
     private Camera _cam;
     private GameObject _player;
+    public LayerMask _weaponIgnoreLayers;
+
+    public LayerMask _enemyLayerMask;
+    public Player playerClass;
 
 
     public static GameManager instance => _instance;
@@ -22,7 +29,7 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        //DontDestroyOnLoad(this.gameObject);
+        DontDestroyOnLoad(this.gameObject);
         if (_instance == null)
         {
             _instance = this;
@@ -36,6 +43,7 @@ public class GameManager : MonoBehaviour
         if (_player == null)
         {
             _player = GameObject.FindGameObjectWithTag("Player");
+            playerClass = _player.GetComponent<Player>();
         }
     }
 

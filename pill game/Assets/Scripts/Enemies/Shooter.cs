@@ -11,10 +11,11 @@ public class Shooter : Enemy
     [SerializeField] private GameObject _bullet;
     
     [SerializeField] private float _shootingDirectionRandomness = .4f;
-    [SerializeField] private float _bulletSpeed = 50f;
+    [SerializeField] private float _shooterBulletSpeed = 50f;
     [SerializeField] private float _shootSpeed;
     
     [SerializeField] private int _bulletDamage;
+    [SerializeField] private bool _shootsDestroyableBullets;
     
     public float _viewDistance = 25f;
     public float _distanceToShoot = 20f;
@@ -47,14 +48,10 @@ public class Shooter : Enemy
             GameObject bullet = Instantiate(_bullet, transform.position + Vector3.up * 1.5f, Quaternion.identity);
             Bullet bulletRef = bullet.GetComponent<Bullet>();
             bulletRef._damage = _bulletDamage;
-            var bulletRigidybody = bullet.GetComponent<Rigidbody>();
-            bulletRigidybody.AddForce((_player.transform.position + Vector3.down +
-                                       (new Vector3(
-                                           Random.Range(-_shootingDirectionRandomness, _shootingDirectionRandomness),
-                                           Random.Range(-.3f, .3f),
-                                           Random.Range(-_shootingDirectionRandomness, _shootingDirectionRandomness)))
-                                       - transform.localPosition) * _bulletSpeed * Time.deltaTime,
-                ForceMode.VelocityChange);
+            bulletRef._bulletSpeed = _shooterBulletSpeed;
+            bulletRef._destroyable = _shootsDestroyableBullets;
+            bulletRef._randomNumber = Random.Range(0, _shootingDirectionRandomness);
+
             yield return new WaitForSeconds(_shootSpeed);
         }
 

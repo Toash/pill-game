@@ -1435,13 +1435,16 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: '1 - Melee
+  m_Text: 'F - Shield
+
+    1 - Melee
 
     2 - Pistol
 
     3 - Silenced MG
 
-    4 - Shotgun'
+    4
+    - Shotgun'
 --- !u!1 &8403608368291112736
 GameObject:
   m_ObjectHideFlags: 0

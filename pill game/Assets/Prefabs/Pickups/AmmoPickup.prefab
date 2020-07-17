@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2837365790883211596}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Bullet7_Bone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -42,9 +42,9 @@ GameObject:
   - component: {fileID: 1912384888145325348}
   - component: {fileID: 3358713362520274358}
   - component: {fileID: 4396511138059313238}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: AmmoPickup
-  m_TagString: Pickup
+  m_TagString: AmmoPickup
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -61,10 +61,11 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6981652178285310457}
+  - {fileID: 1540148648599109628}
   - {fileID: 5406043338484729327}
   - {fileID: 2476637961149221607}
-  - {fileID: 1103332959986741743}
   - {fileID: 6698604145407928835}
+  - {fileID: 1103332959986741743}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -82,6 +83,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _weaponID: 1
   _amount: 10
+  _isAmmo: 0
 --- !u!65 &3358713362520274358
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -166,7 +168,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2476637961149221607}
   - component: {fileID: 7363556487682919261}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Machine Gun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -187,7 +189,7 @@ Transform:
   - {fileID: 5063688875575678987}
   - {fileID: 6071197386317980880}
   m_Father: {fileID: 2347222118428777437}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &7363556487682919261
 Animator:
@@ -217,7 +219,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6071197386317980880}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Bullet4_Bone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -248,7 +250,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1103332959986741743}
   - component: {fileID: 5614954281704675212}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: ????
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -269,7 +271,7 @@ Transform:
   - {fileID: 7688411930957909454}
   - {fileID: 5439763770437002213}
   m_Father: {fileID: 2347222118428777437}
-  m_RootOrder: 3
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &5614954281704675212
 Animator:
@@ -299,7 +301,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6981652178285310457}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Empty
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -330,7 +332,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8508945267843685151}
   - component: {fileID: 7196992075753166344}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Bullet2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -413,7 +415,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7665484738299166194}
   - component: {fileID: 1280480622768175700}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Bullet7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -496,7 +498,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5063688875575678987}
   - component: {fileID: 8225348205678668585}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Bullet4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -578,7 +580,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5439763770437002213}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Bullet1_Bone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -609,8 +611,8 @@ GameObject:
   m_Component:
   - component: {fileID: 6698604145407928835}
   - component: {fileID: 2465459632947617320}
-  m_Layer: 2
-  m_Name: ????
+  m_Layer: 0
+  m_Name: Shotgun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -651,6 +653,36 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!1 &6812631257552176921
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1540148648599109628}
+  m_Layer: 0
+  m_Name: Empty (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1540148648599109628
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6812631257552176921}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 1.0989516, y: 0.6694011, z: -1.9910421}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2347222118428777437}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7580999863605365275
 GameObject:
   m_ObjectHideFlags: 0
@@ -661,7 +693,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5406043338484729327}
   - component: {fileID: 2463240697896562456}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Pistol
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -682,7 +714,7 @@ Transform:
   - {fileID: 8508945267843685151}
   - {fileID: 8861083787458756105}
   m_Father: {fileID: 2347222118428777437}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &2463240697896562456
 Animator:
@@ -713,7 +745,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7688411930957909454}
   - component: {fileID: 4992851935435182055}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Bullet1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -795,7 +827,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8861083787458756105}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Bullet2_Bone
   m_TagString: Untagged
   m_Icon: {fileID: 0}

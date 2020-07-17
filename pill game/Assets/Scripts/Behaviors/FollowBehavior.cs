@@ -30,12 +30,11 @@ public class FollowBehavior : StateMachineBehaviour
                 RaycastHit hit;
                 LayerMask notsensorMask =~ LayerMask.GetMask("Sensor");
                 
-                if(Physics.Raycast(animator.transform.position + (Vector3.up * 1), _playerPos.transform.position - animator.transform.position,out hit))
+                if(Physics.Raycast(animator.transform.position + Vector3.up * 2, _playerPos.transform.position - (animator.transform.position + Vector3.up * 2),out hit,1000,GameManager.instance._enemyLayerMask))
                 {
                     if (hit.transform.CompareTag("Player"))
                     {
                         //Debug.Log("raycasthittheplayer!");
-                        animator.GetComponent<NavMeshAgent>().velocity = Vector3.zero;
                         animator.SetBool("isShooting", true);
                         animator.SetBool("isFollowing", false);
                     }

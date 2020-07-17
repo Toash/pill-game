@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5663862167451471508}
   - component: {fileID: 6023120273593116722}
   - component: {fileID: 313440851828597370}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Glasses
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -90,7 +90,7 @@ GameObject:
   - component: {fileID: 7167998707082754390}
   - component: {fileID: 7167998707082754384}
   - component: {fileID: 7167998707082754391}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -205,8 +205,8 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 20
-  m_Acceleration: 10
+  m_Speed: 10
+  m_Acceleration: 15
   avoidancePriority: 50
   m_AngularSpeed: 360
   m_StoppingDistance: 0
@@ -229,14 +229,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be931c27e09aa5e43a03e98e795bca6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _enemyFieldOfView: 180
   enteredTrigger: 0
   _hitByPlayer: 0
   _shooterHealth: 50
   _bullet: {fileID: 3174634631062021683, guid: e983003dabeee1142be2ca11268192df, type: 3}
-  _shootingDirectionRandomness: 1
-  _bulletSpeed: 1000
-  _shootSpeed: 0.5
+  _shootingDirectionRandomness: 5
+  _shooterBulletSpeed: 20
+  _shootSpeed: 1
   _bulletDamage: 10
+  _shootsDestroyableBullets: 1
   _viewDistance: 50
   _distanceToShoot: 20
 --- !u!95 &1177110282252272965

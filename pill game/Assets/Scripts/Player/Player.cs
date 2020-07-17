@@ -36,9 +36,22 @@ public class Player : MonoBehaviour
 
         public static float _horizontal;
         public static float _vertical;
+        public static float _defaultFOV;
+
+        public static bool hasShield;
+        public static bool hasMelee;
+        public static bool hasPistol;
+        public static bool hasSmg;
+        public static bool hasShotgun;
+        
+        [SerializeField] private bool _hasShield;
+        [SerializeField] private bool _hasMelee;
+        [SerializeField] private bool _hasPistol;
+        [SerializeField] private bool _hasSmg;
+        [SerializeField] private bool _hasShotgun;
+        
 
         private bool _sceneReloaded;
-
 
         private AudioSource _footSteps;
 
@@ -50,19 +63,27 @@ public class Player : MonoBehaviour
         private void Awake()
         {
                 _footSteps = GetComponent<AudioSource>();
+
+                hasShield = _hasShield;
+                hasMelee = _hasMelee;
+                hasPistol = _hasPistol;
+                hasSmg = _hasSmg;
+                hasShotgun = _hasShotgun;
         }
 
 
         private void Start()
         {
                 //_playerHealth = _playerHealth;
-                _char = GetComponent<CharacterController>();
                 _cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+                _char = GetComponent<CharacterController>();
                 Cursor.lockState = CursorLockMode.Locked;
                 Cursor.visible = false;
                 UIManager.instance.UpdateUI(UIManager.instance._healthText, "HEALTH: " + _playerHealth);
                 _defaultMoveSpeed = _moveSpeed;
                 sphereCollider = _sensor.GetComponent<SphereCollider>();
+
+                _defaultFOV = _cam.fieldOfView;
         }
 
         private void Update()
@@ -72,6 +93,7 @@ public class Player : MonoBehaviour
 
                 if (!PauseMenu.isPaused)
                 {
+                        _cam.transform.localRotation = Quaternion.Euler(new Vector3(Player.xRotation,0,0) + Gun.Rot + CameraSway.SwayRot);
                         Move();  
                         MouseLook();
                         Crouch();
@@ -189,6 +211,7 @@ public class Player : MonoBehaviour
 
         public void PlayerDamage(int damageAmount)
         {
+                Gun.currentRotation += new Vector3(15,0,15);
                 _playerHealth = _playerHealth - damageAmount;
                 UIManager.instance.UpdateUI(UIManager.instance._healthText, "HEALTH: " + _playerHealth);
                 if (_playerHealth <= 0)
@@ -208,9 +231,15 @@ public class Player : MonoBehaviour
 
         private void OnTriggerEnter(Collider other)
         {
-                if (other.CompareTag("Pickup"))
+                if (other.CompareTag("AmmoPickup"))
                 {
-                        other.GetComponent<AmmoPickup>().AddPickup();
+                        other.GetComponent<Pickup>().AddPickup();
+                        AudioManager.PlaySoundAtPosition(AudioManager.instance.PickupSFX,.25f,other.transform.position, AudioManager.instance.Mixer.FindMatchingGroups("Effects")[0]);
+                        Destroy(other.gameObject);
+                }
+                if (other.CompareTag("ObjectPickup"))
+                {
+                        other.GetComponent<Pickup>().AddObject();
                         AudioManager.PlaySoundAtPosition(AudioManager.instance.PickupSFX,.25f,other.transform.position, AudioManager.instance.Mixer.FindMatchingGroups("Effects")[0]);
                         Destroy(other.gameObject);
                 }

@@ -6,8 +6,7 @@ using Random = UnityEngine.Random;
 
 public class Gun : Weapon
 {
-
-    [SerializeField] private bool _silenced;
+    [SerializeField] private bool _destroysBullets;
     
     [SerializeField] protected int _magAmount = 30;
 
@@ -42,8 +41,8 @@ public class Gun : Weapon
 
     [SerializeField] private float _spread;
     
-    private Vector3 currentRotation;
-    private Vector3 Rot;
+    public static Vector3 currentRotation;
+    public static Vector3 Rot;
     private Player player;
 
     private void Awake()
@@ -58,15 +57,15 @@ public class Gun : Weapon
         player = GameManager.instance.player.GetComponent<Player>();
     }
     
-    void RecoilAndUpDownMouseMovement()
+    public void RotationStuff()
     {
-        //lerps float current rotation from zero to return speed
         currentRotation = Vector3.Lerp(currentRotation, Vector3.zero, _returnSpeed * Time.deltaTime);
-        //slerps float rot from current rotation to rot speed
         Rot = Vector3.Slerp(Rot, currentRotation, _rotationSpeed * Time.fixedDeltaTime);
-        _cam.transform.localRotation = Quaternion.Euler(new Vector3(Player.xRotation,0,0) + Rot + CameraSway.SwayRot);
     }
     
+    
+
+
     private void KickbackRecoilAiming()
     {
         currentRotation += new Vector3(-_recoilRotationAiming.x, Random.Range(-_recoilRotationAiming.y, _recoilRotationAiming.y), Random.Range(-_recoilRotationAiming.z,_recoilRotationAiming.z));
@@ -84,18 +83,18 @@ public class Gun : Weapon
             transform.localPosition = Vector3.Lerp(transform.localPosition, new Vector3(-.5f,0,0) + initialPosition,
                 Time.deltaTime * 30);
             
-            _cam.fieldOfView = Mathf.Lerp(_cam.fieldOfView, _defaultFOV - _zoomFOV,25 * Time.deltaTime);
+            _cam.fieldOfView = Mathf.Lerp(_cam.fieldOfView, Player._defaultFOV - _zoomFOV,25 * Time.deltaTime);
         }
         else
         {
-            _cam.fieldOfView = Mathf.Lerp(_cam.fieldOfView, _defaultFOV,15 * Time.deltaTime);
+            _cam.fieldOfView = Mathf.Lerp(_cam.fieldOfView, Player._defaultFOV,15 * Time.deltaTime);
         }
     }
 
     protected override void Update()
     {
         base.Update();
-        RecoilAndUpDownMouseMovement();
+        RotationStuff();
         UIManager.instance.UpdateUI(UIManager.instance._reserveText, "RESERVE: " + _reserveAmmo.ToString());
         Zoom();
         if (Input.GetButtonDown("Reload") && !_isReloading && _currentAmount != _magAmount && _reserveAmmo > 0)
@@ -151,8 +150,8 @@ public class Gun : Weapon
     
             Rigidbody _bulletRB = bullet.GetComponent<Rigidbody>();
             _bulletRB.AddForce(_cam.transform.forward * 100,ForceMode.Impulse);*/
+            
 
-            int excludingPlayer =~ LayerMask.GetMask("Player");
             Ray ray;
             RaycastHit hit;
             
@@ -160,7 +159,7 @@ public class Gun : Weapon
             
             if (!_isShotgun)
             {
-                if (Physics.Raycast(_cam.transform.position, _cam.transform.forward, out hit, 1000,excludingPlayer))
+                if (Physics.Raycast(_cam.transform.position, _cam.transform.forward, out hit, 1000,GameManager.instance._weaponIgnoreLayers))
                 {
                     //bullet tracer
                     ParticleManager.PlayParticleAtPosition(ParticleManager.instance.BulletTracer,
@@ -181,15 +180,29 @@ public class Gun : Weapon
                     if (!hit.transform.CompareTag("Enemy"))
                     {
 
-                        if (!hit.transform.CompareTag("DynamicObject"))
+                        if (!hit.transform.CompareTag("DynamicObject") && !hit.transform.CompareTag("Bullet") && !hit.transform.CompareTag("ExplosiveBarrel"))
                         {
-                            //if we hit an object that is dynamic
+                            //if we didnt hit an enemy, spawn a bullet hole
                             var bullethole = Instantiate(_bulletHole, hit.point,
                                 Quaternion.LookRotation(hit.normal * -1f));
                             Destroy(bullethole.gameObject, 3);
                         }
+                        
+                        if (hit.transform.CompareTag("ExplosiveBarrel"))
+                        {
+                            GameLogic.PlayExplosion(hit.transform.position,GameManager.instance._explosiveBarrelRadius);
+                            Destroy(hit.transform.gameObject);
+                        }
+                        
 
-                        //if we didnt hit an enemy, spawn a bullet hole
+                        if (_destroysBullets)
+                        {
+                            if (hit.transform.CompareTag("Bullet"))
+                            {
+                                Destroy(hit.transform.gameObject);
+                            }
+                        }
+
                         ParticleManager.PlayParticleAtPosition(ParticleManager.instance.BulletHitFX, hit.point,
                             Quaternion.LookRotation(hit.normal * -1f));
                     }
@@ -206,11 +219,12 @@ public class Gun : Weapon
             if (_isShotgun)
             {
                 bool _hasHitEnemy = false;
+                bool _hasHitBarrel = false;
+                Vector3 _barrelPos = Vector3.zero;
                 for (int i = 0; i < _pellets; i++)
                 {
-                    if (Physics.Raycast(_cam.transform.position, _cam.transform.forward + GetRandomDirection(!Player._isAiming ? _spread : _spread/5f), out hit,1000,excludingPlayer))
+                    if (Physics.Raycast(_cam.transform.position, _cam.transform.forward + GameLogic.GetRandomDirection(!Player._isAiming ? _spread : _spread/5f), out hit,1000,GameManager.instance._weaponIgnoreLayers))
                     {
-                        
                         //Debug.Log(hit.transform.name);
                         //bullet tracer
                         ParticleManager.PlayParticleAtPosition(ParticleManager.instance.BulletTracer,
@@ -231,12 +245,26 @@ public class Gun : Weapon
                         if (!hit.transform.CompareTag("Enemy"))
                         {
 
-                            if (!hit.transform.CompareTag("DynamicObject"))
+                            if (!hit.transform.CompareTag("DynamicObject") && !hit.transform.CompareTag("Bullet") && !hit.transform.CompareTag("ExplosiveBarrel"))
                             {
-                                //if we hit an object that is dynamic
                                 var bullethole = Instantiate(_bulletHole, hit.point,
                                     Quaternion.LookRotation(hit.normal * -1f));
                                 Destroy(bullethole.gameObject, 3);
+                            }
+
+                            if (hit.transform.CompareTag("ExplosiveBarrel"))
+                            {
+                                _hasHitBarrel = true;
+                                _barrelPos = hit.transform.position;
+                                Destroy(hit.transform.gameObject);
+                            }
+                            
+                            if (_destroysBullets)
+                            {
+                                if (hit.transform.CompareTag("Bullet"))
+                                {
+                                    Destroy(hit.transform.gameObject);
+                                }
                             }
 
                             //if we didnt hit an enemy, spawn a bullet hole
@@ -249,12 +277,20 @@ public class Gun : Weapon
                         {
                             hit.rigidbody.AddForce(-hit.normal * 15, ForceMode.Impulse);
                         }
+                        
                     }
                 }
 
                 if (_hasHitEnemy)
                 {
                     AudioManager.PlaySound(AudioManager.instance.SplatSFX, .25f);
+                }
+                if (_hasHitBarrel)
+                {
+                    if (_barrelPos != null)
+                    {
+                        GameLogic.PlayExplosion(_barrelPos, GameManager.instance._explosiveBarrelRadius);
+                    }
                 }
             }
             #endregion

@@ -43,3 +43,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bdb7c705f37d834cb689197d9880b91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _explosiveBarrelRadius: 7
+  _weaponIgnoreLayers:
+    serializedVersion: 2
+    m_Bits: 2147514679
+  _enemyLayerMask:
+    serializedVersion: 2
+    m_Bits: 2147505719
+  playerClass: {fileID: 0}

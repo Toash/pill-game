@@ -34,11 +34,16 @@ public class AudioManager : MonoBehaviour
     public AudioClip ReloadSFX;
     public AudioClip AlertedSFX;
 
+    public AudioClip ThudSFX;
+
+    public AudioClip ExplosionSFX;
+
     private void Awake()
     {
         //DontDestroyOnLoad(this.gameObject);
     }
-
+    //AudioManager.PlaySound(AudioManager.instance.ReloadSFX, .25f);
+    //AudioManager.PlaySoundAtPosition(AudioManager.instance.SplatSFX,10,this.transform.position,AudioManager.instance.Mixer.FindMatchingGroups("Enemy")[0]);
     //plays 2d sound
     public static void PlaySound(AudioClip sound, float _volume)
     {

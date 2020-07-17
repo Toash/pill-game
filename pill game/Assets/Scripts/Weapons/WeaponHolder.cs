@@ -28,23 +28,26 @@ public class WeaponHolder : MonoBehaviour
             transform.localPosition = Vector3.Lerp(transform.localPosition, new Vector3(0,-1,-2) + initialPosition,
                 Time.deltaTime * 30);
         }
-        
-        
-        if (Input.GetKeyDown(KeyCode.Alpha1) && !Weapon._isReloading && !_isSwitching)
+        if (Input.GetKeyDown(KeyCode.F) && !Weapon._isReloading && !_isSwitching && Player.hasShield)
         {
             StartCoroutine(SwitchWeapon(0));
         }
-        if (Input.GetKeyDown(KeyCode.Alpha2) && !Weapon._isReloading && !_isSwitching)
+        
+        if (Input.GetKeyDown(KeyCode.Alpha1) && !Weapon._isReloading && !_isSwitching && Player.hasMelee)
         {
             StartCoroutine(SwitchWeapon(1));
         }
-        if (Input.GetKeyDown(KeyCode.Alpha3) && !Weapon._isReloading && !_isSwitching)
+        if (Input.GetKeyDown(KeyCode.Alpha2) && !Weapon._isReloading && !_isSwitching && Player.hasPistol)
         {
             StartCoroutine(SwitchWeapon(2));
         }
-        if (Input.GetKeyDown(KeyCode.Alpha4) && !Weapon._isReloading && !_isSwitching)
+        if (Input.GetKeyDown(KeyCode.Alpha3) && !Weapon._isReloading && !_isSwitching && Player.hasSmg)
         {
             StartCoroutine(SwitchWeapon(3));
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha4) && !Weapon._isReloading && !_isSwitching && Player.hasShotgun)
+        {
+            StartCoroutine(SwitchWeapon(4));
         }
     }
 

@@ -19,12 +19,12 @@
               </e>
             </e>
           </e>
-        </e>
-        <e p="BrokenVector" t="Include">
-          <e p="LowPolyShaders" t="Include">
-            <e p="Shaders" t="Include">
-              <e p="LowPolyPBRShader.shader" t="Include" />
-              <e p="LowPolyUnlitShader.shader" t="Include" />
+          <e p="BrokenVector" t="Include">
+            <e p="LowPolyShaders" t="Include">
+              <e p="Shaders" t="Include">
+                <e p="LowPolyPBRShader.shader" t="Include" />
+                <e p="LowPolyUnlitShader.shader" t="Include" />
+              </e>
             </e>
           </e>
         </e>
@@ -53,16 +53,23 @@
             <e p="MainMenu.cs" t="Include" />
             <e p="PauseMenu.cs" t="Include" />
           </e>
+          <e p="Misc" t="Include">
+            <e p="ExplosiveBarrel.cs" t="Include" />
+          </e>
           <e p="Pickups" t="Include">
-            <e p="AmmoPickup.cs" t="Include" />
+            <e p="Pickup.cs" t="Include" />
           </e>
           <e p="Player" t="Include">
             <e p="CameraSway.cs" t="Include" />
             <e p="Player.cs" t="Include" />
           </e>
+          <e p="Static" t="Include">
+            <e p="GameLogic.cs" t="Include" />
+          </e>
           <e p="Weapons" t="Include">
             <e p="Gun.cs" t="Include" />
             <e p="Melee.cs" t="Include" />
+            <e p="Shield.cs" t="Include" />
             <e p="Weapon.cs" t="Include" />
             <e p="WeaponHolder.cs" t="Include" />
             <e p="WeaponSway.cs" t="Include" />

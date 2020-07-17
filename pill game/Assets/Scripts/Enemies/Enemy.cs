@@ -15,6 +15,7 @@ public abstract class Enemy : MonoBehaviour
 
         protected Animator _anim;
 
+        public float _enemyFieldOfView;
 
         [HideInInspector] public bool enteredTrigger;
 

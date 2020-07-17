@@ -52,5 +52,16 @@ public class PauseMenu : MonoBehaviour
         GameManager.instance.ReloadScene();
         
     }
+
+    /*public void EditFov(string fovToEdit)
+    {
+        
+        float fov = float.Parse(fovToEdit);
+        if (fov > 0) 
+        {
+            Player._defaultFOV = fov;
+            GameManager.instance.cam.fieldOfView = Player._defaultFOV;
+        }
+    }*/
     
 }

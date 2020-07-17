@@ -54,3 +54,5 @@ MonoBehaviour:
   SplatSFX: {fileID: 8300000, guid: 415185333449dc54cab9bfeed78cc4d0, type: 3}
   ReloadSFX: {fileID: 8300000, guid: bde6a5d63bde7324e9b0419b1fbf1fb6, type: 3}
   AlertedSFX: {fileID: 8300000, guid: 24205366a912d8c46b4552798b4679cc, type: 3}
+  ThudSFX: {fileID: 8300000, guid: 2d01830f5de56bf43af6680c3fb94101, type: 3}
+  ExplosionSFX: {fileID: 8300000, guid: 3cf2323a6d1c416429cbae0aa79b4928, type: 3}

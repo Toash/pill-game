@@ -8,6 +8,7 @@ using UnityEngine.UI;
 public class Weapon : MonoBehaviour
 {
 
+    
     protected Camera _cam;
     
     
@@ -20,7 +21,8 @@ public class Weapon : MonoBehaviour
     [SerializeField] protected GameObject _bulletHole;
 
     [SerializeField] private Vector3 _modelRecoil;
-    
+
+    private GameObject _weaponHolder;
     
     
 
@@ -29,16 +31,17 @@ public class Weapon : MonoBehaviour
 
     protected int _currentAmount;
     protected float _nextFire;
-    protected float _defaultFOV;
     public static bool _isReloading;
     
     
     
     protected Vector3 initialPosition;
-    
-    
 
 
+    private void Awake()
+    {
+        _weaponHolder = GameObject.FindGameObjectWithTag("WeaponHolder");
+    }
 
 
     protected void ModelRecoil()
@@ -47,28 +50,7 @@ public class Weapon : MonoBehaviour
             Time.deltaTime * 30);
     }
     
-    protected void MeleeRecoil()
-    {
-        transform.localPosition = Vector3.Lerp(transform.localPosition, new Vector3(0,-3,0) + initialPosition,
-            Time.deltaTime * 30);
-    }
-
-
-    protected void MakeCameraWork()
-    {
-        _cam.transform.localRotation = Quaternion.Euler(new Vector3(Player.xRotation,0,0)+CameraSway.SwayRot);
-    }
-
-
-    private void Awake()
-    {
-        //_cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
-    }
-
-    private void OnEnable()
-    {
-        
-    }
+    
 
     protected virtual  void Start()
     {
@@ -76,8 +58,7 @@ public class Weapon : MonoBehaviour
         {
             _cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         }
-
-        _defaultFOV = _cam.fieldOfView;
+        
         initialPosition = transform.localPosition;
     }
 
@@ -86,9 +67,29 @@ public class Weapon : MonoBehaviour
     {
 
     }
-    
-    
-    
+
+
+    public void AddWeapon(int weaponToAdd)
+    {
+        switch (weaponToAdd)
+        {
+            case 0:
+                Player.hasShield = true;
+                break;
+            case 1:
+                Player.hasMelee = true;
+                break;
+            case 2:
+                Player.hasPistol = true;
+                break;
+            case 3:
+                Player.hasSmg = true;
+                break;
+            case 4:
+                Player.hasShotgun = true;
+                break;
+        }
+    }
     
     
     
@@ -115,14 +116,6 @@ public class Weapon : MonoBehaviour
             }
         }
     }
-
-    protected Vector3 GetRandomDirection(float randomness)
-    {
-        Vector3 direction = new Vector3(Random.Range(-randomness,randomness),Random.Range(-randomness,randomness),Random.Range(-randomness,randomness)
-        );
-
-        return direction;
-
-    }
+    
 
 }

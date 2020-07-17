@@ -52,3 +52,5 @@ MonoBehaviour:
     type: 3}
   BulletTracer: {fileID: 4022675667482568266, guid: 430c39283ea801c4b8889749e23f7ffd,
     type: 3}
+  ExplosionFX: {fileID: 7125255901503140018, guid: 199e1e00571eef246b4b509a14c35fc1,
+    type: 3}

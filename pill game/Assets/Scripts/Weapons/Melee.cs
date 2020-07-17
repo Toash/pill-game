@@ -17,7 +17,6 @@ public class Melee : Weapon
     protected override void Update()
     {
         base.Update();
-        MakeCameraWork();
     }
     
     private void OnEnable()
@@ -32,7 +31,7 @@ public class Melee : Weapon
         if (!WeaponHolder._isSwitching)
         {
             AudioManager.PlaySound(AudioManager.instance.SwordSlashSFX, .1f);
-            MeleeRecoil();
+            ModelRecoil();
             RaycastHit hit;
             LayerMask _excludingPlayer = ~ LayerMask.GetMask("Player");
             if (Physics.Raycast(_cam.transform.position, _cam.transform.forward, out hit, _meleeRange,_excludingPlayer))

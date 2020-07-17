@@ -7,6 +7,7 @@ public class CameraSway : MonoBehaviour
     [SerializeField] private float _maxAmount = 5f;
     [SerializeField] private float _smooth = 6f;
     [SerializeField] private float _raycastDistance = .6f;
+    [SerializeField] private float _moveMultiplier = .5f;
 
 
     private Quaternion initialRotation;
@@ -99,7 +100,7 @@ public class CameraSway : MonoBehaviour
         
         
 
-        transform.localPosition = initialPosition + new Vector3(movementX,0,0);
+        transform.localPosition = initialPosition + new Vector3(movementX*_moveMultiplier,0,0);
         
         SwayRot = new Vector3(0,0,rotationX);
     }
